@@ -36,6 +36,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /* MONGOOSE SETUP*/
+/*This uses an api url and port which are located in a seperate hidden .env file*/
 const PORT = process.env.PORT || 6001;
 console.log("MongoDB URL:", process.env.MONGO_URL);
 mongoose.connect(process.env.MONGO_URL, {}).then(() => {
