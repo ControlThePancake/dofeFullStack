@@ -75,30 +75,30 @@ export const colorTokens = {
             }),
       },
       typography: {
-        fontFamily: ['Salsa', cursive].join(","),
+        fontFamily: ['Salsa', "Helvetica"].join(","),
         fontSize: 12,
         h1: {
-          fontFamily: ['Salsa', cursive].join(","),
+          fontFamily: ['Salsa', "Helvetica"].join(","),
           fontSize: 40,
         },
         h2: {
-          fontFamily: ['Salsa', cursive].join(","),
+          fontFamily: ['Salsa', "Helvetica"].join(","),
           fontSize: 32,
         },
         h3: {
-          fontFamily: ['Salsa', cursive].join(","),
+          fontFamily: ['Salsa', "Helvetica"].join(","),
           fontSize: 24,
         },
         h4: {
-          fontFamily: ['Salsa', cursive].join(","),
+          fontFamily: ['Salsa', "Helvetica"].join(","),
           fontSize: 20,
         },
         h5: {
-          fontFamily: ['Salsa', cursive].join(","),
+          fontFamily: ['Salsa', "Helvetica"].join(","),
           fontSize: 16,
         },
         h6: {
-          fontFamily: ['Salsa', cursive].join(","),
+          fontFamily: ['Salsa', "Helvetica"].join(","),
           fontSize: 14,
         },
       },

@@ -1,4 +1,4 @@
-import { createslice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     mode: "light",
@@ -7,7 +7,7 @@ const initialState = {
 
 };
 
-export const authSlice = createslice({
+export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
