@@ -1,13 +1,11 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true, min: 3, max: 20 },
     email: { type: String, required: true, unique: true, max: 50 },
+    firstName: { type: String, required: true, min: 3, max: 20 },
+    lastName: { type: String, min: 3, max: 20 },
     password: { type: String, required: true, min: 5 },
-    isAdmin: { type: Boolean, default: false },
-    picturePath: {type: String, default: ""},
-    tokens: {type: Number, default: "2"},
-    isPaying: {type: Boolean, default: false}
+    tokenNum: {type: Number, default: 3}
 }, {timestamps: true});
 
 const User = mongoose.model("User", UserSchema);

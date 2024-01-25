@@ -2,8 +2,7 @@ import express from "express";
 
 import{
     getUser,
-    getTokens,
-    addRemoveTokens,
+    tokenNum,
     } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -11,9 +10,9 @@ const router = express.Router();
 
 /* READ */
 router.get("/:id", verifyToken, getUser);
-router.get("/:id/tokens", verifyToken, getTokens);
+router.get("/:id/tokens", verifyToken, tokenNum);
 
 /* UPDATE */
-router.patch("/:id/:tokens", verifyToken, addRemoveTokens)
+router.patch("/:id/:tokens", verifyToken, tokenNum)
 
 export default router;

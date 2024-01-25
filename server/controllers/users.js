@@ -2,7 +2,7 @@ import User from "../models/User.js";
 
 /* Read */
 
-export const getUsers = async (req, res) => {
+export const getUser = async (req, res) => {
     try{
         const { id } = req.params;
         const user = await User.findById(id);
@@ -12,4 +12,13 @@ export const getUsers = async (req, res) => {
     }
 }
 
+export const tokenNum = async (req, res) => {
+    try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    const tokenNum = user ? user.tokenNum : null;
+    }catch (err) {
+        res.status(404).json({ message: err.message });
+      }
+    };
 

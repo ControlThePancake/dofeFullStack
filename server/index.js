@@ -3,14 +3,14 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose"; 
 import cors from "cors";
 import dotenv from "dotenv";
-import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/auth.js"; // Import the authRoutes router
 import userRoutes from "./routes/users.js";
-import { register } from "./controllers/auth.js";
+import { verifyToken } from "./middleware/auth.js";
+import User from "./models/User.js";
 
 /* CONFIGS*/
 const __filename = fileURLToPath(import.meta.url);
@@ -26,28 +26,15 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use(cors());
 app.use("/assets",express.static(path.join(__dirname, "public/assets")));
 
-/* FILE STORAGE*/
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, "public/assets");
-    },
-    filename: function(req, file, cb){
-        cb(null, file.originalname);
-    }
-});
-
-const upload = multer({ storage });
-
-
 /* Routes */
-app.use("/auth", authRoutes);
-app.use("users", userRoutes);
+app.use("/auth", authRoutes); // Use the authRoutes router for /auth routes
+app.use("/users", userRoutes);
 
 /* MONGOOSE SETUP*/
 /*This uses an api url and port which are located in a seperate hidden .env file*/
 const PORT = process.env.PORT || 6001;
 console.log("MongoDB URL:", process.env.MONGO_URL);
-mongoose.connect(process.env.MONGO_URL, {}).then(() => {
+mongoose.connect(process.env.MONGO_URL, {
+}).then(() => {
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
-}).catch((error) => console.log(error.message));
-
+}).catch((error) => console.log(error.message, "index.js"));
