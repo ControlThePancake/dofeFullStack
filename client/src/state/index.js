@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     mode: "dark",
     user: null,
-    token: null,
+    token: 0,
 
 };
 
@@ -17,18 +17,12 @@ export const authSlice = createSlice({
         setLogin: (state, action) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
+            state.user.tokens = action.payload.tokens;
         },
         setLogout: (state) => {
             state.token = null;
             state.token = null;
         },
-        setTokens: (state, action) => {
-            if (state.user){
-                state.user.tokens = action.payload.tokens;
-            } else {
-                console.error("This user has no tokens")
-            }
-        }
     },
 });
 

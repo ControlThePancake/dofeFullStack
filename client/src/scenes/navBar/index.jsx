@@ -46,6 +46,9 @@ const Navbar = () => {
       fullName = `${user.firstName} ${user.lastName}`;
   }
 
+  const tokens = user?.tokenNum || 0;
+  console.log(tokens);
+
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
@@ -78,6 +81,7 @@ const Navbar = () => {
           </IconButton>
           <Message sx={{ fontSize: "25px" }} />
           <Help sx={{ fontSize: "25px" }} />
+          Tokens: {tokens}
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
@@ -152,6 +156,7 @@ const Navbar = () => {
             </IconButton>
             <Message sx={{ fontSize: "25px" }} />
             <Help sx={{ fontSize: "25px" }} />
+            Tokens: {tokens}
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
