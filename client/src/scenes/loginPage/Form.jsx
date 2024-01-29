@@ -7,13 +7,11 @@ import{
     Typography,
     useTheme,
 } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
-import FlexBetween from "components/FlexBetween";
 
 const registerScheme = yup.object().shape({
     email: yup.string().email("Invalid Email").required("required"),
@@ -51,7 +49,7 @@ const Form = () => {
     const register = async( values , onSubmitProps) => {
         
         const savedUserResponse = await fetch(
-            "http://localhost:3001/auth/register",
+            "http://192.168.0.76:3001/auth/register",
             {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -69,7 +67,7 @@ const Form = () => {
 
     const login = async(values, onSubmitProps) => {
         const loggedInResponse = await fetch(
-            "http://localhost:3001/auth/login",{
+            "http://192.168.0.76:3001/auth/login",{
             
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -131,6 +129,7 @@ const Form = () => {
                                 error={Boolean(touched.firstName) && Boolean(errors.firstName)}
                                 helperText={touched.firstName && errors.firstName}
                                 sx={{ gridColumn: "span 2"}}
+                                autoComplete="firstname"
                             />
 
                                 <TextField
@@ -142,6 +141,7 @@ const Form = () => {
                                 error={Boolean(touched.lastName) && Boolean(errors.lastName)}
                                 helperText={touched.lastName && errors.lastName}
                                 sx={{ gridColumn: "span 2"}}
+                                autoComplete="lastname"
                             />
                                 
                             </>
@@ -156,6 +156,7 @@ const Form = () => {
                             error={Boolean(touched.email) && Boolean(errors.email)}
                             helperText={touched.email && errors.email}
                             sx={{ gridColumn: "span 4"}}
+                            autoComplete="email"
                         />
 
                         <TextField
@@ -168,6 +169,7 @@ const Form = () => {
                             error={Boolean(touched.password) && Boolean(errors.password)}
                             helperText={touched.password && errors.password}
                             sx={{ gridColumn: "span 4"}}
+                            autoComplete="password"
                         />  
 
                     </Box>
