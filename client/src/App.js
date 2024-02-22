@@ -6,7 +6,7 @@ import NavBar from "scenes/navBar";
 import QuizzizPage from "scenes/quizzizBot";
 import KahootPage from "scenes/kahootBot";
 import BlooketPage from "scenes/blooketBot";
-import AboutUs from "scenes/aboutUs";
+import AboutMePage from "scenes/aboutMe";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -30,7 +30,7 @@ function App() {
             <Route path="/quizzizbot" element={isAuth ?<QuizzizPage />: <Navigate to="/"/>} />
             <Route path="/kahootbot" element={isAuth ?<KahootPage />: <Navigate to="/"/>} />
             <Route path="/blooketbot" element={isAuth ?<BlooketPage />: <Navigate to="/"/>} />
-            <Route path="/aboutUs" element={isAuth ? <AboutUs />: <Navigate to="/"/>} />
+            <Route path="/aboutMe" element={isAuth ? <AboutMePage />: <Navigate to="/"/>} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ThemeProvider>

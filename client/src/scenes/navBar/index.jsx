@@ -11,21 +11,27 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import {
-  Message,
-  DarkMode,
-  LightMode,
-  Help,
   Menu,
   Close,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { setMode, setLogout } from "state";
+import {  setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
 
 
+
 const Navbar = () => {
+  
+  const buttonStyle = {
+    background: 'none', // This makes the background transparent
+    border: 'none',    // This removes the border
+    color: 'inherit',  // This makes the text color inherit from the parent
+    padding: '0',      // This removes padding, adjust as needed
+    cursor: 'pointer', // This changes the mouse cursor to a pointer on hover
+    outline: 'none'    // This removes the outline on focus (for accessibility, you might want to keep it or handle focus differently)
+  };
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +40,6 @@ const Navbar = () => {
 
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
-  const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
@@ -72,16 +77,21 @@ const Navbar = () => {
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === "dark" ? (
-              <DarkMode sx={{ fontSize: "25px" }} />
-            ) : (
-              <LightMode sx={{ color: dark, fontSize: "25px" }} />
-            )}
-          </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
-          Tokens: {tokens}
+          <Typography>
+              <button style={buttonStyle} onClick={() => navigate("/aboutMe")} >
+              Contact Me
+              </button>
+            </Typography>
+            <Typography>
+              <button style={buttonStyle} onClick={() => navigate("/contactMe")} >
+              Contact Me
+              </button>
+            </Typography>
+            <Typography>
+              <button style={buttonStyle} onClick={() => navigate("/tokenShop")} >
+              Tokens: {tokens}
+              </button>
+            </Typography>
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
@@ -144,19 +154,23 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
-            <IconButton
-              onClick={() => dispatch(setMode())}
-              sx={{ fontSize: "25px" }}
-            >
-              {theme.palette.mode === "dark" ? (
-                <DarkMode sx={{ fontSize: "25px" }} />
-              ) : (
-                <LightMode sx={{ color: dark, fontSize: "25px" }} />
-              )}
-            </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
-            Tokens: {tokens}
+        
+            <Typography>
+              <button style={buttonStyle} onClick={() => navigate("/aboutMe")} >
+              Contact Me
+              </button>
+            </Typography>
+            <Typography>
+              <button style={buttonStyle} onClick={() => navigate("/contactMe")} >
+              Contact Me
+              </button>
+            </Typography>
+            <Typography>
+              <button style={buttonStyle} onClick={() => navigate("/tokenShop")} >
+              Tokens: {tokens}
+              </button>
+            </Typography>
+            
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
