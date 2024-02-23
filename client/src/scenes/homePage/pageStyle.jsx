@@ -171,7 +171,7 @@ const StarField = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} />;
+  return <canvas ref={canvasRef} className='starfield-canvas' />;
 };
 
 export default StarField;
