@@ -30,7 +30,8 @@ const Navbar = () => {
     color: 'inherit',  // This makes the text color inherit from the parent
     padding: '0',      // This removes padding, adjust as needed
     cursor: 'pointer', // This changes the mouse cursor to a pointer on hover
-    outline: 'none'    // This removes the outline on focus (for accessibility, you might want to keep it or handle focus differently)
+    outline: 'none',
+    fontSize:"clamp(0.5rem, 1rem, 1.25rem)", // This removes the outline on focus (for accessibility, you might want to keep it or handle focus differently)
   };
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const Navbar = () => {
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
-          fontSize="clamp(1rem, 2rem, 2.25rem)"
+          fontSize="clamp(1.5rem, 2.5rem, 2.75rem)"
           color="primary"
           onClick={() => navigate("/home")}
           sx={{
@@ -76,17 +77,17 @@ const Navbar = () => {
 
       {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
-        <FlexBetween gap="2rem">
+        <FlexBetween gap="2.5rem">
           <Typography>
               <button style={buttonStyle} onClick={() => navigate("/aboutMe")} >
-              Contact Me
+              About Me
               </button>
             </Typography>
-            <Typography>
+           {/* <Typography>
               <button style={buttonStyle} onClick={() => navigate("/contactMe")} >
               Contact Me
               </button>
-            </Typography>
+      </Typography> */}
             <Typography>
               <button style={buttonStyle} onClick={() => navigate("/tokenShop")} >
               Tokens: {tokens}
@@ -97,6 +98,7 @@ const Navbar = () => {
               value={fullName}
               sx={{
                 backgroundColor: neutralLight,
+                textAlign: "center",
                 width: "150px",
                 borderRadius: "0.25rem",
                 p: "0.25rem 1rem",
@@ -157,14 +159,14 @@ const Navbar = () => {
         
             <Typography>
               <button style={buttonStyle} onClick={() => navigate("/aboutMe")} >
-              Contact Me
+              About Me
               </button>
             </Typography>
-            <Typography>
+            {/*<Typography>
               <button style={buttonStyle} onClick={() => navigate("/contactMe")} >
               Contact Me
               </button>
-            </Typography>
+      </Typography>*/}
             <Typography>
               <button style={buttonStyle} onClick={() => navigate("/tokenShop")} >
               Tokens: {tokens}

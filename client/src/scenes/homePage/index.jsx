@@ -2,7 +2,6 @@ import React from 'react';
 import NavBar from 'scenes/navBar'; // Adjust import paths as necessary
 import { useNavigate } from 'react-router-dom';
 import { Typography, Card, CardContent, Grid, Button, useTheme, useMediaQuery, Box } from '@mui/material';
-import '../../styles.css'; // Ensure this is correctly pointing to your StarField component
 import StarField from './pageStyle';
 
 const HomePage = () => {
@@ -18,7 +17,7 @@ const HomePage = () => {
     };
 
     return (
-        <>
+    <>
         
         <StarField /> {/* StarField as a background */}
         
@@ -28,8 +27,8 @@ const HomePage = () => {
 
             {/* Main content */}
             <Box flexGrow={1} p={isMobile ? '2rem' : '3rem'} display="flex" flexDirection="column" justifyContent="center">
-                <Box textAlign={isMobile ? 'center' : 'left'} paddingBottom={isMobile ? "0.5vh" : "3vh"}>
-                    <Typography variant="h3" fontWeight="bold" gutterBottom sx={{ fontSize: isMobile ? '2rem' : '3rem' }}>
+                <Box textAlign={isMobile ? 'center' : 'left'} paddingBottom={isMobile ? "0.5vh" : "10vh"}>
+                    <Typography variant="h3" fontWeight="bold" gutterBottom sx={{ fontSize: isMobile ? '2.5rem' : '3.5rem' }}>
                         Choose a bot and enjoy
                     </Typography>
                     <Button  onClick={() => navigate('/aboutMe')}>
@@ -43,7 +42,7 @@ const HomePage = () => {
                             <Card
                                 sx={{
                                     minWidth: '20vw', // Using vw for responsive width
-                                    minHeight: '20vh', // Using vh for responsive height
+                                    minHeight: '25vh', // Using vh for responsive height
                                     padding: '1rem',
                                     display: 'flex',
                                     justifyContent: 'center',
