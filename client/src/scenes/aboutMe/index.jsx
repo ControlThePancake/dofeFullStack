@@ -57,7 +57,7 @@ const AboutMePage = () => {
 
                         This is a website made to launch bots and do math homework for you (specifically DrFrost)<br></br><br></br>
 
-                        Despite this website being a bit of a shithole rn, im pretty happy with how its coming along (I procrastinated for ages)<br></br><br></br>
+                        Despite this website being a bit messy rn, im pretty happy with how its coming along (I procrastinated for ages)<br></br><br></br>
 
                         This is a project im making in my spare time to learn some web dev stuff and pray that I get millions in donations (<a href="https://buy.stripe.com/aEU7whaWn6mxdwsdQQ" style={{color: theme.palette.primary.main, textDecoration: "none"}}>pls donate</a>)<br></br><br></br>
                         

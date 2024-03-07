@@ -52,7 +52,6 @@ const BotForm = () => {
     const dispatch = useDispatch();
     const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const isKahoot = pageType === 'kahoot';
   // const isQuizizz = pageType === 'quizizz'; // Uncomment if used
   const _id = user._id;
 
@@ -157,7 +156,7 @@ const BotForm = () => {
                   >
                     This will cost {(!values.botNum || Number(values.botNum) === 0) ? 1 : values.botNum } token(s)<br>
                     </br>
-                    <a href='/tokenPage' style={{color: theme.palette.primary.main, textDecoration: 'underline'}}>Get more tokens</a>
+                    <a href='/tokenShop' style={{color: theme.palette.primary.main, textDecoration: 'underline'}}>Get more tokens</a>
                   </Typography>
                 <Button
                   fullWidth

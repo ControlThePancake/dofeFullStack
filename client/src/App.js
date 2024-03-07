@@ -2,7 +2,6 @@ import {BrowserRouter, Navigate, Routes, Route} from "react-router-dom";
 import HomePage from "scenes/homePage";
 import LoginPage from "scenes/loginPage";
 import ProfilePage from "scenes/profilePage";
-import NavBar from "scenes/navBar";
 import BotPage from "scenes/botPage";
 import TokenShop from "scenes/tokenShop";
 import AboutMePage from "scenes/aboutMe";

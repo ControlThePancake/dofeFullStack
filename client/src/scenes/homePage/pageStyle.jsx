@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef} from 'react';
 import "../../styles.css";
 
 const StarField = () => {
   const canvasRef = useRef(null);
-  const [pointerX, setPointerX] = useState(null);
-  const [pointerY, setPointerY] = useState(null);
+
   const STAR_COLOR = '#fff';
   const STAR_SIZE = 3;
   const STAR_MIN_SCALE = 0.2;
@@ -14,7 +13,7 @@ const StarField = () => {
   const heightRef = useRef(0);
   const stars = useRef([]);
   const velocity = useRef({ x: 0, y: 0, tx: 0, ty: 0, z: 0.0005 });
-  const touchInputRef = useRef(false);
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -127,51 +126,19 @@ const StarField = () => {
       requestAnimationFrame(step);
     };
 
-    const movePointer = (x, y) => {
-      if (typeof pointerX === 'number' && typeof pointerY === 'number') {
-        let ox = x - pointerX,
-          oy = y - pointerY;
-        velocity.current.tx = velocity.current.tx + (ox / 8 * scaleRef.current) * (touchInputRef.current ? 1 : -1);
-        velocity.current.ty = velocity.current.ty + (oy / 8 * scaleRef.current) * (touchInputRef.current ? 1 : -1);
-      }
-      setPointerX(x);
-      setPointerY(y);
-    };
-
-    const onMouseMove = (event) => {
-      touchInputRef.current = false;
-      movePointer(event.clientX, event.clientY);
-    };
-
-    const onTouchMove = (event) => {
-      touchInputRef.current = true;
-      movePointer(event.touches[0].clientX, event.touches[0].clientY, true);
-      event.preventDefault();
-    };
-
-    const onMouseLeave = () => {
-      setPointerX(null);
-      setPointerY(null);
-    };
+    
 
     generate();
     resize();
     step();
 
     window.addEventListener('resize', resize);
-    canvas.addEventListener('mousemove', onMouseMove);
-    canvas.addEventListener('touchmove', onTouchMove);
-    canvas.addEventListener('touchend', onMouseLeave);
-    document.addEventListener('mouseleave', onMouseLeave);
 
     return () => {
       window.removeEventListener('resize', resize);
-      canvas.removeEventListener('mousemove', onMouseMove);
-      canvas.removeEventListener('touchmove', onTouchMove);
-      canvas.removeEventListener('touchend', onMouseLeave);
-      document.removeEventListener('mouseleave', onMouseLeave);
+
     };
-  }, [pointerX, pointerY]);
+  }, );
 
   return <canvas ref={canvasRef} className='starfield-canvas' />;
 };
