@@ -12,9 +12,8 @@ const HomePage = () => {
     const handleCardClick = (botName) => {
         console.log(`Clicked on ${botName}`);
         if (botName === 'Blooket Bot') { return; }
-        let thing = botName.toLowerCase().replace(/\s+/g, '');
-        navigate(`/${thing}`);
-    };
+        navigate(`/botPage`, { state: { botType: botName } });
+      };
 
     return (
     <>

@@ -59,7 +59,7 @@ const AboutMePage = () => {
 
                         Despite this website being a bit of a shithole rn, im pretty happy with how its coming along (I procrastinated for ages)<br></br><br></br>
 
-                        This is a project im making in my spare time to learn some web dev stuff and pray that I get millions in donations (<a href="#" style={{color: theme.palette.primary.main, textDecoration: "none"}}>pls donate</a>)<br></br><br></br>
+                        This is a project im making in my spare time to learn some web dev stuff and pray that I get millions in donations (<a href="https://buy.stripe.com/aEU7whaWn6mxdwsdQQ" style={{color: theme.palette.primary.main, textDecoration: "none"}}>pls donate</a>)<br></br><br></br>
                         
                         To actually use the thing (probably the reason you came to this page), just click on one the bots on the home page, enter your bot name and the number of bots you have. Depending on the number of bots you will be charged a certain amount of tokens. Tokens can be bought or you can ask me to give you some more ig <br></br><br></br>
 

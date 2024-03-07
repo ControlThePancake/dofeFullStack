@@ -17,13 +17,13 @@ const LoginPage = () => {
                 </Typography>
             </Box>
             <Box
-            width={isNonMoblie ? "50%" : "93%"}
-            p = "2rem"
-            m="2rem auto"
-            borderRadius="1.5rem"
-            backgroundcolor={theme.palette.background.alt}
+                width={isNonMoblie ? "50%" : "93%"}
+                p = "2rem"
+                m="2rem auto"
+                borderRadius="1.5rem"
+                backgroundcolor={theme.palette.background.alt}
             >
-                <Typography fontWeight="500" variant="h5" sx={{mb: "1.5rem"}}>
+                <Typography fontWeight="500" variant="h4" sx={{mb: "1.5rem"}}>
                     Welcome to BotPulse, still in development
                 </Typography>
                 <Form />

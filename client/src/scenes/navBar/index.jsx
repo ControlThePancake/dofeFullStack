@@ -38,6 +38,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const tokens = useSelector((state) => state.user.tokenNum);
 
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
@@ -52,7 +53,6 @@ const Navbar = () => {
       fullName = `${user.firstName} ${user.lastName}`;
   }
 
-  const tokens = user?.tokenNum || 0;
   console.log(tokens);
 
   return (

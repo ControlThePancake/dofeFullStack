@@ -3,9 +3,8 @@ import HomePage from "scenes/homePage";
 import LoginPage from "scenes/loginPage";
 import ProfilePage from "scenes/profilePage";
 import NavBar from "scenes/navBar";
-import QuizzizPage from "scenes/quizzizBot";
-import KahootPage from "scenes/kahootBot";
-import BlooketPage from "scenes/blooketBot";
+import BotPage from "scenes/botPage";
+import TokenShop from "scenes/tokenShop";
 import AboutMePage from "scenes/aboutMe";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -27,10 +26,9 @@ function App() {
             <Route path="/" element={!isAuth ? <LoginPage />: <Navigate to="/home"/>} />/
             <Route path="/home" element={isAuth ? <HomePage /> : <Navigate to="/"/> } />
             <Route path="/profile/:userId" element={isAuth ? <ProfilePage /> : <Navigate to="/"/> } />
-            <Route path="/quizzizbot" element={isAuth ?<QuizzizPage />: <Navigate to="/"/>} />
-            <Route path="/kahootbot" element={isAuth ?<KahootPage />: <Navigate to="/"/>} />
-            <Route path="/blooketbot" element={isAuth ?<BlooketPage />: <Navigate to="/"/>} />
-            <Route path="/aboutMe" element={isAuth ? <AboutMePage />: <Navigate to="/"/>} />
+            <Route path="/botPage" element={isAuth ?<BotPage /> : <Navigate to="/"/>} />
+            <Route path="/aboutMe" element={isAuth ? <AboutMePage /> : <Navigate to="/"/>} />
+            <Route path="/tokenShop" element={isAuth ? <TokenShop /> : <Navigate to="/"/>} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ThemeProvider>

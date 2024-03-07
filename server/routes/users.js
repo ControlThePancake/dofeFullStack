@@ -3,6 +3,7 @@ import express from "express";
 import{
     getUser,
     tokenNum,
+    updateTokenNum,
     } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -13,6 +14,6 @@ router.get("/:id", verifyToken, getUser);
 router.get("/:id/tokens", verifyToken, tokenNum);
 
 /* UPDATE */
-router.patch("/:id/:tokens", verifyToken, tokenNum)
+router.patch("/input",updateTokenNum, verifyToken )
 
 export default router;
