@@ -2,11 +2,13 @@ import { Box , Typography, useMediaQuery, useTheme } from "@mui/material";
 import StarField from "scenes/homePage/pageStyle";
 import Navbar from "scenes/navBar";
 import React from 'react';
+import { useSelector } from "react-redux";
 
 const TokenShop = () => {
     const theme = useTheme();
     const isNonMobile = useMediaQuery(theme.breakpoints.up('md'));
-
+    const user = useSelector((state) => state.user);
+    console.log(user._id);
     return (
         <Box>
             <StarField />
@@ -28,8 +30,11 @@ const TokenShop = () => {
                 borderRadius="1.5rem"
                 bgcolor={theme.palette.background.alt}
             >
-                <stripe-pricing-table pricing-table-id="prctbl_1OrlRpJr7oV87jisK5RBrxyk"
-                publishable-key="pk_live_51Oq1gWJr7oV87jisi1WSnv2TvNzKYG2G2cVrqqM1TFLYyiKcIL7RrSZY3bCcyrSI9wuQ2uIrpOXcIBhbLUp55Mez00rctwezyH">
+                <stripe-pricing-table 
+                    pricing-table-id="prctbl_1OrlRpJr7oV87jisK5RBrxyk"
+                    publishable-key="pk_live_51Oq1gWJr7oV87jisi1WSnv2TvNzKYG2G2cVrqqM1TFLYyiKcIL7RrSZY3bCcyrSI9wuQ2uIrpOXcIBhbLUp55Mez00rctwezyH"
+                    client-reference-id={`${user._id}`}
+                    >
                 </stripe-pricing-table>
             </Box>
             <Box sx={{

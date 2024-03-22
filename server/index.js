@@ -9,12 +9,16 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js"; // Import the authRoutes router
 import userRoutes from "./routes/users.js";
+import stripeRoutes from "./routes/stripe.js";
 import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
+import Stripe from "stripe";
+
 
 /* CONFIGS*/
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const stripe = new Stripe(process.env.STRIPE_KEY);
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -29,6 +33,7 @@ app.use("/assets",express.static(path.join(__dirname, "public/assets")));
 /* Routes */
 app.use("/auth", authRoutes); // Use the authRoutes router for /auth routes
 app.use("/users", userRoutes);
+app.use("/webhook", stripeRoutes)
 
 /* MONGOOSE SETUP*/
 /*This uses an api url and port which are located in a seperate hidden .env file*/
