@@ -33,7 +33,7 @@ app.use("/assets",express.static(path.join(__dirname, "public/assets")));
 /* Routes */
 app.use("/auth", authRoutes); // Use the authRoutes router for /auth routes
 app.use("/users", userRoutes);
-app.use("/webhook", stripeRoutes)
+app.use("/stripe", stripeRoutes)
 
 /* MONGOOSE SETUP*/
 /*This uses an api url and port which are located in a seperate hidden .env file*/
