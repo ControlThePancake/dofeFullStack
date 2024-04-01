@@ -49,7 +49,7 @@ const Form = () => {
     const register = async( values , onSubmitProps) => {
         
         const savedUserResponse = await fetch(
-            "http://192.168.0.76:3001/auth/register",
+            "http://192.168.0.133:3001/auth/register",
             {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -67,7 +67,7 @@ const Form = () => {
 
     const login = async(values, onSubmitProps) => {
         const loggedInResponse = await fetch(
-            "http://192.168.0.76:3001/auth/login",{
+            "http://192.168.0.133:3001/auth/login",{
             
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
