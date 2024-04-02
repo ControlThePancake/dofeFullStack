@@ -1,4 +1,6 @@
-const stripeInstance = require('stripe')("sk_test_51Oq1gWJr7oV87jisVw1lfL5bsorVgd7t9YmOPxumOw0qSbZFMx6fGESB35zJapSiB2tEkJr8OeVc0R3P3wroJ53q00gmFT11uv");
+import express from "express";
+import stripe from "stripe";
+const stripeInstance = stripe("sk_test_51Oq1gWJr7oV87jisVw1lfL5bsorVgd7t9YmOPxumOw0qSbZFMx6fGESB35zJapSiB2tEkJr8OeVc0R3P3wroJ53q00gmFT11uv")
 const endpointSecret = "whsec_aa714adb711894f2cb66dcb8c0f67eefda399752d572d7eca8f4eb66d6e39a9f"; // Replace with your endpoint's secret
 import User from '../models/User.js';
 
