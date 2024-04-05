@@ -35,6 +35,7 @@ const HomePage = () => {
                     </Button>
                 </Box>
 
+
                 <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 4 }}>
                     {['Kahoot Bot', 'Quizziz Bot', 'Blooket Bot'].map((botName, index) => (
                         <Grid item xs={12} sm={4} key={index}>

@@ -1,10 +1,7 @@
 import express from "express";
-import { handleStripeWebhook } from "../controllers/stripe.js";
-import bodyParser from "body-parser";
-
+import {stripeThing} from "../controllers/stripe.js"
 const router = express.Router();
 
-router.post('/webhook', express.raw({type: 'application/json'}), handleStripeWebhook);
+router.post('/webhook', express.raw({type: 'application/json'}), stripeThing)
 
-  
 export default router;

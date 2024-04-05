@@ -19,27 +19,23 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
-const app1 = express();
 app.use(express.json());
-app1.use(express.json());
-
 app.use(helmet());
-app1.use(helmet());
-
-app.use(helmet.crossOriginResourcePolicy({ policy:"cross-origin" }));
-app1.use(helmet.crossOriginResourcePolicy({ policy:"cross-origin" }));
-
 app.use(morgan("common"));
-app1.use(morgan("common"));
-
-app.use(bodyParser.json({ limit: "30mb", extended: true}));
+app.use(helmet.crossOriginResourcePolicy({ policy:"cross-origin" }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
+app.use(bodyParser.json({ limit: "30mb", extended: true}));
+app.use(cors());
 
-app1.use(bodyParser.json({ limit: "30mb", extended: true}));
+const app1 = express();
+app1.use(helmet());
+app1.use(cors());
+app1.use(morgan("common"));
+app1.use(helmet.crossOriginResourcePolicy({ policy:"cross-origin" }));
 app1.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 
-app.use(cors());
-app1.use(cors());
+
+
 
 app.use("/assets",express.static(path.join(__dirname, "public/assets")));
 
