@@ -31,8 +31,8 @@ const TokenShop = () => {
                 bgcolor={theme.palette.background.alt}
             >
                 <stripe-pricing-table 
-                    pricing-table-id="prctbl_1OrlRpJr7oV87jisK5RBrxyk"
-                    publishable-key="pk_live_51Oq1gWJr7oV87jisi1WSnv2TvNzKYG2G2cVrqqM1TFLYyiKcIL7RrSZY3bCcyrSI9wuQ2uIrpOXcIBhbLUp55Mez00rctwezyH"
+                    pricing-table-id="prctbl_1P2Hb5Jr7oV87jisGEe6TinC"
+                    publishable-key="pk_test_51Oq1gWJr7oV87jis2dX6hsX5wJpwYOZXFmrbm0CRMQbO5yhXvkIpNjI1i0l0ZjIdozUi1K11cBVsEUwKrCrKfihU00EEY1IoEw"
                     client-reference-id={`${user._id}`}
                     >
                 </stripe-pricing-table>
