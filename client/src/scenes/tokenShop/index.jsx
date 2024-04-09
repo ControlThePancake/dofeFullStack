@@ -1,4 +1,4 @@
-import { Box , Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import StarField from "scenes/homePage/pageStyle";
 import Navbar from "scenes/navBar";
 import React from 'react';
@@ -10,15 +10,16 @@ const TokenShop = () => {
     const user = useSelector((state) => state.user);
     console.log(user._id);
     return (
-        <Box>
+        // This Box acts as a flex container
+        <Box display="flex" flexDirection="column" minHeight="100vh"> 
             <StarField />
             <Navbar />
             <Box p="1rem 6%" textAlign="center" width="100%">
                 <Typography
                     fontWeight="bold"
-                    fontSize="clamp(1.5rem, 3rem, 3.375rem)"
+                    fontSize="clamp(1.5rem, 3vw, 3.375rem)"
                     textAlign="center"
-                    color = "primary"
+                    color="primary"
                 >
                     Token Shop
                 </Typography>
@@ -34,9 +35,11 @@ const TokenShop = () => {
                     pricing-table-id="prctbl_1P2Hb5Jr7oV87jisGEe6TinC"
                     publishable-key="pk_test_51Oq1gWJr7oV87jis2dX6hsX5wJpwYOZXFmrbm0CRMQbO5yhXvkIpNjI1i0l0ZjIdozUi1K11cBVsEUwKrCrKfihU00EEY1IoEw"
                     client-reference-id={`${user._id}`}
-                    >
+                >
                 </stripe-pricing-table>
             </Box>
+            {/* This Box is used to push the footer to the bottom */}
+            <Box sx={{ flexGrow: 1 }}></Box> 
             <Box sx={{
                 py: '2rem',
                 textAlign: 'center',
@@ -49,10 +52,8 @@ const TokenShop = () => {
                     © 2024 BotPulse. All rights reserved.
                 </Typography>
             </Box>
-            
         </Box>
     );
 };
 
 export default TokenShop;
-

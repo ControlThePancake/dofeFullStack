@@ -81,7 +81,6 @@ export const stripeThing = async (req, res) => {
           }
         );
         
-        
 
         const lineItems = sessionWithLineItems.line_items;
         const clientId = sessionWithLineItems.client_reference_id;
