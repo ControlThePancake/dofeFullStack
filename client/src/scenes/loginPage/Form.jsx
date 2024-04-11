@@ -7,6 +7,11 @@ import{
     Typography,
     useTheme,
 } from "@mui/material";
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -37,6 +42,20 @@ const initialValuesLogin ={
     password: "",
 }
 
+function ErrorDialog({ open, handleClose, errorMessage }) {
+    return (
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>{"Error"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{errorMessage}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+
 const Form = () => {
     const[pageType, setPageType] = useState("login");
     const { palette } = useTheme();
@@ -46,46 +65,61 @@ const Form = () => {
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
 
-    const register = async( values , onSubmitProps) => {
-        
-        const savedUserResponse = await fetch(
-            "http://192.168.0.133:3001/auth/register",
-            {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(values),
-            }
-        );
-        
-        const savedUser = await savedUserResponse.json();
-        onSubmitProps.resetForm();
-        
-        if (savedUser) {
-            setPageType("login");
-        }
+    const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleOpenErrorDialog = (message) => {
+        setErrorMessage(message);
+        setErrorDialogOpen(true);
     };
 
-    const login = async(values, onSubmitProps) => {
-        const loggedInResponse = await fetch(
-            "http://192.168.0.133:3001/auth/login",{
-            
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(values),
-            }
-            
-        );
-        const loggedIn = await loggedInResponse.json();
+    const handleCloseErrorDialog = () => {
+        setErrorDialogOpen(false);
+    };
+
+    const register = async (values, onSubmitProps) => {
+
+    const response = await fetch("http://192.168.0.133:3001/auth/register", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(values),
+    });
+
+    const errorData = await response.json();
+
+    if (!response.ok) {
+        // Extract error message from response
+        
+        handleOpenErrorDialog(errorData.msg || "User already exists");
         onSubmitProps.resetForm();
-        if (loggedIn){
-            dispatch(
-                setLogin({
-                user: loggedIn.user, 
-                token: loggedIn.token,
-                })
-            );
+    } else {
+        // Successfully registered
+        onSubmitProps.resetForm();
+        setPageType("login")
+    }
+};  
+        
+
+    const login = async (values, onSubmitProps) => {
+        const response = await fetch("http://192.168.0.133:3001/auth/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+            // Extract error message from response
+            const errorData = await response.json();
+            handleOpenErrorDialog(errorData.msg || "Invalid login credentials.");
+           
+        } else {
+            // Successfully logged in
+            const loggedIn = await response.json();
+            
+            dispatch(setLogin({user: loggedIn.user, token: loggedIn.token}));
             navigate("/home");
         }
+        onSubmitProps.resetForm();
     };
     
     const handleFormSubmit = async(values, onSubmitProps) => {
@@ -210,6 +244,12 @@ const Form = () => {
                         </Typography>
                         
                     </Box>
+
+                    <ErrorDialog
+                        open={errorDialogOpen}
+                        handleClose={handleCloseErrorDialog}
+                        errorMessage={errorMessage}
+                    />
 
                 </form>
             )}
