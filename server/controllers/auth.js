@@ -4,14 +4,14 @@ import User from "../models/User.js";
 
 /* Register User*/
 export const register = async (req, res) => {
-    try{
-        console.log("Received request body:", req.body);
-        const{
-            email,
-            password,
-            firstName,
-            lastName,
-        } = req.body;
+    try {
+        const { email, password, firstName, lastName } = req.body;
+
+        // Check if the user already exists
+        const existingUser = await User.findOne({ email: email });
+        if (existingUser) {
+            return res.status(400).json({ msg: "User already exists." });
+        }
 
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
@@ -22,9 +22,18 @@ export const register = async (req, res) => {
             firstName,
             lastName,
         });
+        
         const savedUser = await newUser.save();
-        res.status(200).json(savedUser);
-    } catch (err){
+
+        // Create a token for the new user
+        const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
+
+        // Return the user data and token, excluding the password hash
+        const userToSend = { ...savedUser._doc };
+        delete userToSend.password;
+        res.status(200).json({ token, user: userToSend });
+
+    } catch (err) {
         res.status(500).json(err);
     }
 }

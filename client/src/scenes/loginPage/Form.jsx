@@ -78,32 +78,27 @@ const Form = () => {
     };
 
     const register = async (values, onSubmitProps) => {
-
-    const response = await fetch("http://192.168.0.133:3001/auth/register", {
+        const response = await fetch("http://192.168.0.133:3001/auth/register", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(values),
-    });
-
-    const errorData = await response.json();
-
-    if (!response.ok) {
-        // Extract error message from response
-        
-        handleOpenErrorDialog(errorData.msg || "User already exists");
-        onSubmitProps.resetForm();
-    } else {
-        // Successfully registered
-        onSubmitProps.resetForm();
-        setPageType("login")
-    }
-};  
+        });
+        if (!response.ok) {
+            // Extract error message from response
+            const errorData = await response.json();
+            handleOpenErrorDialog(errorData.msg || "User already exists");
+            onSubmitProps.resetForm();
+        } else {
+            await login({ email: values.email, password: values.password }, onSubmitProps);
+            navigate("/home");
+        }
+    };  
         
 
     const login = async (values, onSubmitProps) => {
         const response = await fetch("http://192.168.0.133:3001/auth/login", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values),
         });
 
@@ -111,17 +106,14 @@ const Form = () => {
             // Extract error message from response
             const errorData = await response.json();
             handleOpenErrorDialog(errorData.msg || "Invalid login credentials.");
-           
+            onSubmitProps.resetForm(); // Stop the form from submitting
         } else {
             // Successfully logged in
             const loggedIn = await response.json();
-            
-            dispatch(setLogin({user: loggedIn.user, token: loggedIn.token}));
-            navigate("/home");
+            dispatch(setLogin({ user: loggedIn.user, token: loggedIn.token }));
         }
-        onSubmitProps.resetForm();
     };
-    
+        
     const handleFormSubmit = async(values, onSubmitProps) => {
         if (isLogin) await login(values, onSubmitProps);
         if (isRegister) await register(values, onSubmitProps);
