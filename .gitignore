@@ -399,4 +399,4 @@ FodyWeavers.xsd
 
 #Extra stuff
 .env
-.xyz.pem
+*.pem
