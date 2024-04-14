@@ -47,3 +47,11 @@ export const updateTokenNum = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+export const botLaunch = async (req,res) => {
+    try{
+
+    }catch (err){
+        
+    }
+}
