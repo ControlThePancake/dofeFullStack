@@ -33,7 +33,7 @@ So to finish off this project i need/want to add a couple of things:
 
 • Somehow slap NGINX infront of this and just generally figure out how to properly use NGINX, and then use it with docker
 
-• Might ask some people much smarter than me to look over the authentication and some other stuff in case there are any glaring vulnerabilities, not too sure if an SQL injection is possible? Kind of hoping that either yup or mongoDB has some inbuilt stuff that deals with that. Although if someone attacks this website using an SQL injection i'll honestly be more surprised than shocked.
+• Might ask some people much smarter than me to look over the authentication and some other stuff in case there are any glaring vulnerabilities, not too sure if an SQL injection is possible? Kind of hoping that either yup or mongoDB has some inbuilt stuff that deals with that. Although if someone attacks this website using an SQL injection i'll honestly be more surprised than mad.
 Progress might slow down a little as the exam diet has started, although i'll try my best to dedicate atleast an hour a day
 Theoretically not much is left but i have been saying that for some time so honestly im just trying my best to finish it at this point
 
