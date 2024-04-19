@@ -24,10 +24,15 @@ UPDATE 4
 Right, so i think the https thing should work? Cant test it locally for obvious reasons (tls/ssl certificates are specific to the domain), so im just gonna hope it should work in production. Ive also switched to digitalocean for the host as azure says "school" but apparently the difference between a university and school is foreign to them. So ive switched to digital ocean which, after reading some reddit posts and articles, might be a bit worse in terms of latency and general global coverage but should suffice for this project. The future upkeep cost is also noticably lower than azure (considering azure is just aws nicely repackaged with some bells and whistles, might be wrong dont kill me). 
 
 So to finish off this project i need/want to add a couple of things:
+
 • An autmotic token refund system and alert system, in the case that a game code is invalid or something else goes wrong
+
 • A potentially more robuhst payment system, currently its using one link and just taking the userId as a parameter to fill out the order, but frankly im not quite sure how it would handle/what would happen if someone just copied the link and sent it to someone else, and they entered an email that wasnt in the database. Im assuming it would just break and get an error, which is true in some sense but in production the payment would still go through and i need to figure out a way to either prevent that entirely (could make an embeded payment page on my website but im hoping for some easier solutions, might have to resort to it though) or simply refund them if both values are not found/null. There could be a problem with refund/chargeback costs, as in the refund would cost me money as stripe takes a percentage cut but i would still have to pay the same amount to the user meaning i lose out on the difference, this happens to twitch streamers quite a lot. So thats a whole can of worms which im wondering if i should even care about as its quite unlikely, but at the same time just taking someones money feels morally wrong and knowling leaving a vulnerablitly exposed doesnt feel right either.
+
 • Dockerise the thing 
+
 • Somehow slap NGINX infront of this and just generally figure out how to properly use NGINX, and then use it with docker
+
 • Might ask some people much smarter than me to look over the authentication and some other stuff in case there are any glaring vulnerabilities, not too sure if an SQL injection is possible? Kind of hoping that either yup or mongoDB has some inbuilt stuff that deals with that. Although if someone attacks this website using an SQL injection i'll honestly be more surprised than shocked.
 Progress might slow down a little as the exam diet has started, although i'll try my best to dedicate atleast an hour a day
 Theoretically not much is left but i have been saying that for some time so honestly im just trying my best to finish it at this point
