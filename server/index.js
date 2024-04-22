@@ -10,8 +10,7 @@ import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js"; // Import the authRoutes router
 import userRoutes from "./routes/users.js";
 import stripeRoutes from "./routes/stripe.js";
-import https from "https";
-import fs from "fs";
+
 
 
 /* CONFIGS*/
@@ -50,28 +49,10 @@ app1.use("/stripe", stripeRoutes)
 /*This uses an api url and port which are located in a seperate hidden .env file*/
 const PORT = process.env.PORT || 6001;
 const SPORT = process.env.SPORT;
-const options = {
-    key: fs.readFileSync(path.join(__dirname, 'ssl', 'botpulse.xyz.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'ssl', 'botpulse.xyz.pem'))
-};
-
-app.use(express.static(path.join(__dirname, 'server')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'server', 'index.html'));
-});
-
-
 console.log("MongoDB URL:", process.env.MONGO_URL);
-
 mongoose.connect(process.env.MONGO_URL, {
 }).then(() => {
-    https.createServer(options, app).listen(PORT, () => {
-        console.log(`Server listening on port ${PORT}`);
-    });
+    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 }).catch((error) => console.log(error.message, "index.js"));
 
-https.createServer(options, app1).listen(SPORT, () => {
-    console.log(`Server listening on port ${SPORT}`);
-});
-
+app1.listen(SPORT, () => console.log(`Stripe running on port: ${SPORT}`));
