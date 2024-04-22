@@ -1,6 +1,8 @@
 # dofeFullStack
 #Domain : botpulse.xyz
+
 #Email : admin@botpulse.xyz
+
 #Disclaimer
 
 This is a very much an "i'll wing it and try learn something new" project so any help would be appreciated , and there will probably be alot of flaws but as long as it works i couldnt care less
