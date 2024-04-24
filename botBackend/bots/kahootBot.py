@@ -17,7 +17,7 @@ def start():
     bot_num = int(input("Enter the amount of bots: "))   
     print(game_code, bot_num)
     runInParallel(bot_num, game_code)
-    return "successfulInit"
+    return "successfulInit" 
 
 
 def play_game(game_code):

@@ -56,7 +56,7 @@ const BotForm = () => {
   const _id = user._id;
 
   const send = async (values, onSubmitProps) => {
-    const sendData = {values, _id}
+    const sendData = {values, _id, pageType}
     const savedUserResponse = await fetch('http://192.168.0.133:3001/users/input', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
