@@ -72,6 +72,7 @@ def play_game(game_code,name):
     while True:
         if len(driver.find_elements(By.CSS_SELECTOR, "[data-functional-selector=ranking-text]")) > 0:
             break
+        
         try:
             WebDriverWait(driver, 180).until(EC.presence_of_element_located((By.CSS_SELECTOR,'[data-functional-selector="answer-0"]')))
             answer = random.choice(driver.find_elements(By.CSS_SELECTOR, "[data-functional-selector^=answer]"))

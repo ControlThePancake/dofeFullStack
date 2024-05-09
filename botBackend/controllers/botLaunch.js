@@ -2,9 +2,9 @@ import { spawn } from "child_process";
 
 export const botLaunch = async (req,res) => {
     try{
-        const {gameCode , botName, botNumber, pageType} = req.body;
-        const dataToSend = [gameCode,botNumber, botName];
-        const bot = spawn("python", [`../bots/${pageType}Bot.py`, ...dataToSend]);
+        const {gameCode , botName, botNumNew, pageType} = req.body;
+        const dataToSend = [gameCode,botNumNew, botName];
+        const bot = spawn("python", [`bots/${pageType}Bot.py`, ...dataToSend]);
         let pythonOutput = "";
 
         bot.stdout.on("data", (data) => {
@@ -27,7 +27,6 @@ export const botLaunch = async (req,res) => {
                 // Handle error
             }
         });
-
         res.status(200);
     } catch(err){
         res.status(500).json(err);
@@ -40,3 +39,4 @@ export const botLaunch = async (req,res) => {
 
 
 
+ 

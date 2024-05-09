@@ -25,10 +25,10 @@ export const tokenNum = async (req, res) => {
 
 /* Update */
 
-export const updateTokenNum = async (req, res) => {
+export const botLaunch = async (req, res) => {
     try {
         console.log("Received request body:", req.body);
-        const { _id, values} = req.body;
+        const { _id, values, pageType} = req.body;
         console.log(_id, values.botNum);
         const user = await User.findById(_id);
         if (!user) {
@@ -43,15 +43,22 @@ export const updateTokenNum = async (req, res) => {
         await user.save();
         const token = jwt.sign({id: _id}, process.env.JWT_SECRET);
         res.status(200).json({token,user});
+        const gameCode = parseInt(values.gameCode);
+        const botName = values.botName;
+        const send = async (gameCode ,botName, botNumNew, pageType) =>{
+            const dataToSend = {gameCode, botName, botNumNew, pageType}
+            const response = await fetch("http://192.168.0.133:3002/regBots/botLaunch", {
+                method: "PATCH",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataToSend),
+            });
+
+            const data = await response.json();
+            console.log(data);
+        };
+        await send(gameCode, botName , botNumNew, pageType);
+        res.status(200).json({ msg: "work, yes" });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-
-export const botLaunch = async (req,res) => {
-    try{
-
-    }catch (err){
-        
-    }
-}

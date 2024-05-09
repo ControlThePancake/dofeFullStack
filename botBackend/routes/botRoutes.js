@@ -6,7 +6,7 @@ import{
 
 const router = express.Router();
 
-router.post("/botLaunch", botLaunch)
+router.patch("/botLaunch", botLaunch)
 
 
 export default router;

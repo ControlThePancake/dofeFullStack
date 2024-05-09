@@ -19,7 +19,7 @@ app.use(cors());
 app.disable('x-powered-by')
 
 app.use("/regBots", botRoutes)
-
 const PORT = process.env.PORT;
 
-app.listen(PORT, () => console.log(`Thing might be working ${PORT}`))
+app.listen(PORT, () => console.log(`Thing might be working ${PORT}`));
+   
