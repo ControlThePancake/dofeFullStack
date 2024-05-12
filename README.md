@@ -5,7 +5,7 @@
 
 ### Disclaimer
 
-This is a very much an "i'll wing it and try learn something new" project , and there will probably be alot of flaws but as long as it works i couldnt care less. This is a personal project and its not meant to be used and expanded upon, so this readme is also more of a progress thing for me to submit at the end so I understand that this isn't the slightess bit helpful.
+This is a very much an "i'll wing it and try learn something new" project , and there will probably be alot of flaws but as long as it works i couldnt care less. This is a personal project and its not meant to be used and expanded upon, so this readme is also more of a progress thing for me to submit at the end so I understand that this isn't the slightest bit helpful.
 
 ## Vision for the project
 
