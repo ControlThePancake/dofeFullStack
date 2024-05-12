@@ -53,6 +53,7 @@ const BotForm = () => {
     const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'));
 
   // const isQuizizz = pageType === 'quizizz'; // Uncomment if used
+  // Switch to {pageType === 'kahoot' ? 'Quizizz' : 'Kahoot'} temp keeping it dead
   const _id = user._id;
 
   const send = async (values, onSubmitProps) => {
@@ -178,7 +179,7 @@ const BotForm = () => {
                     },
                   }}
                 >
-                  Switch to {pageType === 'kahoot' ? 'Quizizz' : 'Kahoot'}
+                
                 </Typography>
               </Box>
             </form>

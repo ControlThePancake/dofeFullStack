@@ -1,4 +1,3 @@
-from os import close 
 import selenium
 from selenium import webdriver
 from multiprocessing import Process
@@ -11,7 +10,6 @@ from selenium.webdriver.chrome.options import Options
 import time
 import random
 import sys
-import ast
 
 
 def start():

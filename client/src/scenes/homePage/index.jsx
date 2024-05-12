@@ -11,7 +11,7 @@ const HomePage = () => {
 
     const handleCardClick = (botName) => {
         console.log(`Clicked on ${botName}`);
-        if (botName === 'Blooket Bot') { return; }
+        if (botName ===  'Blooket Bot' || botName === "Quizziz Bot") { return; }
         navigate(`/botPage`, { state: { botType: botName } });
       };
 
@@ -47,9 +47,9 @@ const HomePage = () => {
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    backgroundColor: botName === 'Blooket Bot' ? theme.palette.action.disabledBackground : theme.palette.primary.main,
+                                    backgroundColor: botName === 'Blooket Bot' || botName === "Quizziz Bot" ? theme.palette.action.disabledBackground : theme.palette.primary.main,
                                     '&:hover': {
-                                        backgroundColor: botName === 'Blooket Bot' ? theme.palette.action.disabledBackground : theme.palette.primary.light,
+                                        backgroundColor: botName ===  'Blooket Bot' || botName === "Quizziz Bot" ? theme.palette.action.disabledBackground : theme.palette.primary.light,
                                     },
                                     [theme.breakpoints.up('md')]: {
                                         padding: '2rem' // Bigger padding in rem for larger screens
