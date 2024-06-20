@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from 'uuid';
+
 /* Read */
 
 export const getUser = async (req, res) => {
@@ -25,10 +27,11 @@ export const tokenNum = async (req, res) => {
 
 /* Update */
 
-export const botLaunch = async (req, res) => {
+
+export const botPrep = async (req, res) => {
     try {
         console.log("Received request body:", req.body);
-        const { _id, values, pageType} = req.body;
+        const { _id, values} = req.body;
         console.log(_id, values.botNum);
         const user = await User.findById(_id);
         if (!user) {
@@ -42,11 +45,22 @@ export const botLaunch = async (req, res) => {
         console.log("User tokenNum:", user.tokenNum);
         await user.save();
         const token = jwt.sign({id: _id}, process.env.JWT_SECRET);
-        res.status(200).json({token,user});
+        const sessionId = uuidv4(); // Generates a unique UUID
+        console.log(sessionId);
+        res.status(200).json({token,sessionId});
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const botLaunch = async (req, res) => {
+    try{
+        const {values, sessionId,  pageType  } = req.body;
         const gameCode = parseInt(values.gameCode);
         const botName = values.botName;
-        const send = async (gameCode ,botName, botNumNew, pageType) =>{
-            const dataToSend = {gameCode, botName, botNumNew, pageType}
+        const botNum = values.botNum;
+        const send = async (gameCode ,botName, botNum, pageType, sessionId) =>{
+            const dataToSend = {gameCode, botName, botNum, pageType, sessionId};
             const response = await fetch("http://192.168.0.133:3002/regBots/botLaunch", {
                 method: "PATCH",
                 headers: { 'Content-Type': 'application/json' },
@@ -56,9 +70,26 @@ export const botLaunch = async (req, res) => {
             const data = await response.json();
             console.log(data);
         };
-        await send(gameCode, botName , botNumNew, pageType);
-        res.status(200).json({ msg: "work, yes" });
-    } catch (err) {
+        send(gameCode ,botName, botNum, pageType, sessionId);
+        res.status(200).json({message: `Session, ${sessionId}, initialised `});
+    }catch (err){
         res.status(500).json({ message: err.message });
     }
 };
+
+
+export const botStatus = async (req, res) =>{
+    try{
+        const { sessionId, status, gameCode, botName } = req.body;
+        console.log(`Status update for session ${sessionId}: ${status}`);
+        // Currently letting this be broken
+        io.to(sessionId).emit('statusUpdate', { status, gameCode, botName });
+        res.status(200).send("Status update received");
+    }catch (err) {
+        // Will happen every time currently
+        res.status(500).json({message : `It died ${err.message}`})
+        console.log(`It died ${err.message}`)
+    }
+};
+
+

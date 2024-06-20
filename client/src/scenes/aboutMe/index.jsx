@@ -63,6 +63,8 @@ const AboutMePage = () => {
                         
                         To actually use the thing (probably the reason you came to this page), just click on one the bots on the home page, enter your bot name and the number of bots you have. Depending on the number of bots you will be charged a certain amount of tokens. Tokens can be bought or you can ask me to give you some more ig <br></br><br></br>
 
+                        Keep in mind that these are simply made to flood kahoots and will not get the answers right, this feature will be added later<br></br><br></br>
+
                         Anyway congrats for making it this far, have some free tokens ig (still in development)
                         
                     </Typography>

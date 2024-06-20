@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 
 import {
   Box,
@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { updateTokens } from 'state';
 import { useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
+
 
 
 const botSchema = (userTokens) => yup.object().shape({
@@ -42,23 +44,35 @@ const initialValues = {
 };
 
 const BotForm = () => {
-    
-    const location = useLocation();
-    const botTypeFromState = location.state?.botType.replace(' Bot', ''); // Remove ' Bot' from the botType if it exists
-    const [pageType, setPageType] = useState(botTypeFromState?.toLowerCase().replace(/\s+/g, '') || 'kahoot');;
-    const theme = useTheme();
-    const user = useSelector((state) => state.user);
-    console.log(user);
-    const dispatch = useDispatch();
-    const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'));
+
+  // main variables
+  const location = useLocation();
+  const botTypeFromState = location.state?.botType.replace(' Bot', ''); // Remove ' Bot' from the botType if it exists
+  const [pageType, setPageType] = useState(botTypeFromState?.toLowerCase().replace(/\s+/g, '') || 'kahoot');;
+  const theme = useTheme();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const [sessionId, setSessionId] = useState('');
+  const [statusMessage, setStatusMessage] = useState('');
+  const [socket, setSocket] = useState(null);
+  
+
+  // unused code that might be needed later
 
   // const isQuizizz = pageType === 'quizizz'; // Uncomment if used
   // Switch to {pageType === 'kahoot' ? 'Quizizz' : 'Kahoot'} temp keeping it dead
+
+  // Bot Code and Required variables
+
   const _id = user._id;
 
-  const send = async (values, onSubmitProps) => {
-    const sendData = {values, _id, pageType}
-    const savedUserResponse = await fetch('http://192.168.0.133:3001/users/input', {
+  // Bot Status Monitor
+
+  const botInit = async (values, onSubmitProps) => {
+    const sendData = {values, _id, pageType};
+    const savedUserResponse = await fetch(':3001/users/bot-prep', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(sendData),
@@ -67,32 +81,90 @@ const BotForm = () => {
     const data = await savedUserResponse.json();
     console.log(data);
     onSubmitProps.resetForm();
+    setSessionId(data.sessionId);
+    botLaunch( values, data , _id, pageType );
   };
+
+  const botLaunch = async (values, data, _id , pageType) => {
+    const sessionId = data.sessionId;
+    const sendData = {values, sessionId, _id, pageType};
+    const launchResponse = await fetch(":3001/users/bot-launch", {
+      method: "PATCH",
+      headers: {"content-Type" : "application/json"},
+      body: JSON.stringify(sendData),
+    });
+
+    const botData = await launchResponse.json();
+    console.log(botData)
+  };
+
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    await send(values, onSubmitProps);
+    await botInit(values, onSubmitProps);
     dispatch(updateTokens(-values.botNum));
+  }
+
+  // Currently this is still under development and will be fixed/used at a later date
+/*
+  useEffect(() => {
+    return () => {
+        if (socket) {
+            socket.disconnect();
+        }
+    };
+  }, [socket, sessionId]);
+
+    // Initialize the socket only if it has not been initialized yet
+    if (!socket) {
+        const newSocket = io(':3001/users/bot-status');
+
+        newSocket.emit('register', { sessionId });
+        
+        newSocket.on('statusUpdate', (data) => {
+            setStatusMessage(data.status);
+        });
+
+        newSocket.on('disconnect', () => {
+            console.log("Disconnected");
+        });
+
+        setSocket(newSocket); // Save the socket in state
+      }
   };
 
+  // Cleanup when the component unmounts or sessionId changes
+  useEffect(() => {
+      return () => {
+          if (socket) {
+              socket.disconnect();
+          }
+      };
+  }, [socket, sessionId]);
 
+*/
 
   return (
     <>
       <Box p="1rem 6%" textAlign="center" width="100%">
-        <Typography fontWeight="bold" fontSize="clamp(1.5rem, 2.5rem, 2.75rem)" color="primary">
-          {pageType.charAt(0).toUpperCase() + pageType.slice(1)} Bot
-        </Typography>
-      </Box>
-      <Box
-        width={isNonMobile ? "50%" : "93%"}
-        p="2rem"
-        m="2rem auto"
-        borderRadius="1.5rem"
-        bgcolor={theme.palette.background.alt}
-      >
-        <Typography fontWeight="500" variant="h4" sx={{ mb: "1.5rem" }}>
-          Try the {pageType.charAt(0).toUpperCase() + pageType.slice(1)} bot
-        </Typography>
+            <Typography fontWeight="bold" fontSize="clamp(1.5rem, 2.5rem, 2.75rem)" color="primary">
+                {pageType.charAt(0).toUpperCase() + pageType.slice(1)} Bot
+            </Typography>
+            {statusMessage && (
+                <Typography color="secondary" style={{ marginTop: '20px' }}>
+                    Status: {statusMessage}
+                </Typography>
+            )}
+        </Box>
+        <Box
+            width={isNonMobile ? "50%" : "93%"}
+            p="2rem"
+            m="2rem auto"
+            borderRadius="1.5rem"
+            bgcolor={theme.palette.background.alt}
+        >
+            <Typography fontWeight="500" variant="h4" sx={{ mb: "1.5rem" }}>
+                Try the {pageType.charAt(0).toUpperCase() + pageType.slice(1)} bot
+            </Typography>
         <Formik
             initialValues={initialValues}
             validationSchema={botSchema(user.tokenNum)}

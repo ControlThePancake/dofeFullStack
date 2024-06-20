@@ -19,7 +19,9 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
     "punycode": "^2.3.1",
-    "stripe": "^14.20.0"
+    "socket.io-client": "^4.7.5",
+    "stripe": "^14.20.0",
+    "uuid": "^9.0.1"
   },
   "name": "dofefullstack",
   "description": "This is a very much i'll wing it and try learn something new project so any help would be appreciated , and there probably will be alot of flaws but as long as it works i couldnt care less",

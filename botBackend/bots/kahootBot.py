@@ -18,28 +18,28 @@ def start():
         game_code = int(sys.argv[1])
         bot_num = int(sys.argv[2])
         name = sys.argv[3]
-        print(f"Game code: {game_code}, Number of bots: {bot_num}, {name}", flush=True)
-        runInParallel(bot_num, game_code,name)
+        sessionId = sys.argv[4]
+        print(f"Game code: {game_code}, Number of bots: {bot_num}, {name}, {sessionId}", flush=True)
+        runInParallel(bot_num, game_code,name, sessionId)
         sys.exit(0)  # Success
     except Exception as e:
         print(e, flush=True)
         sys.exit(1)  # Error
 
 
-def play_game(game_code,name):
+def play_game(game_code,name,sessionId):
     chrome_options = Options()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome( options=chrome_options)
+    print(f"status:running,sessionId:{sessionId}", flush=True)
 
     try:
         driver.get("https://www.kahoot.it")
     except Exception as e:
-        print(e)
-        print("Kahoot connection failed", flush=True)
-        print("0", flush=True)
-        exit(1)
+        print(f"status:error:{str(e)},sessionId:{sessionId}", flush=True)
+        sys.exit(1)
 
     time.sleep(2)
 
@@ -49,10 +49,8 @@ def play_game(game_code,name):
         pinInput.send_keys(game_code)  
         pinInput.send_keys(Keys.RETURN)
     except Exception as e:
-        print(e)
-        print("Game Input Failed to send", flush=True)
-        print("1", flush=True)
-        exit(1)
+        print(f"status:error:{str(e)},sessionId:{sessionId}", flush=True)
+        sys.exit(1)
         
 
     time.sleep(2)
@@ -63,9 +61,8 @@ def play_game(game_code,name):
         nicInput.send_keys(Keys.RETURN)
     except Exception as e:
         print(e)
-        print("Failed to send name" , flush=True)
-        print("2", flush=True)
-        exit(1)
+        print(f"status:error:{str(e)},sessionId:{sessionId}", flush=True)
+        sys.exit(1)
     
     while True:
         if len(driver.find_elements(By.CSS_SELECTOR, "[data-functional-selector=ranking-text]")) > 0:
@@ -77,18 +74,16 @@ def play_game(game_code,name):
             answer.click()
             time.sleep(10)
         except Exception as e:
-            print(e)
-            print("Failed to answer or timeout", flush=True)
-            print("no Answer", flush=True)
-            print("3", flush=True)
-            exit(1)
+            print(f"status:error:{str(e)},sessionId:{sessionId}", flush=True)
+            sys.exit(1)
 
+    print(f"status:completed,session:{sessionId}", flush=True)
     driver.quit()
 
-def runInParallel(count, game_code,name):
+def runInParallel(count, game_code,name, sessionId):
     proc = []
     for i in range(0, count):
-        p = Process(target=play_game, args=(game_code,name,))
+        p = Process(target=play_game, args=(game_code,name, sessionId, ))
         p.start()
         proc.append(p)
     for p in proc:
@@ -96,3 +91,4 @@ def runInParallel(count, game_code,name):
 
 if __name__ == '__main__':
     start()
+

@@ -41,6 +41,10 @@ So to finish off this project i need/want to add a couple of things:
 Progress might slow down a little as the exam diet has started, although i'll try my best to dedicate atleast an hour a day
 Theoretically not much is left but i have been saying that for some time so honestly im just trying my best to finish it at this point
 
+### UPDATE 5
+
+So its sort of been untouched, there are some minor changes but the bulk of the extra features will be added later as I simply dont have the time. The goal is to finish it by the end of this weekend and hopefully host it on either Cloudflare or DigitalOcean. I'll do a proper reflection after i get the project hosted but I feel I've learned alot. After using this on DofE this repo will probably be revamped, with me creating a duplicate repo which will be solely for future development.
+
 
 
 If you have any inquires or suggestions, either email me or just make a fork and submit a pull request

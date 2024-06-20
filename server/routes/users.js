@@ -4,6 +4,8 @@ import{
     getUser,
     tokenNum,
     botLaunch,
+    botStatus,
+    botPrep,
     } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -16,6 +18,8 @@ router.get("/:id/tokens", verifyToken, tokenNum);
 */
 
 /* UPDATE */
-router.patch("/input",botLaunch, verifyToken )
+router.patch("/bot-prep", botPrep, verifyToken )
+router.patch("/bot-launch", botLaunch,verifyToken)
+router.post("/bot-status", botStatus,verifyToken)
 
 export default router;
