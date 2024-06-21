@@ -8,6 +8,8 @@ import botRoutes from "./routes/botRoutes.js"
 
 dotenv.config();
 
+// Some stuff for the app to use
+
 const app = express();
 app.use(express.json());
 app.use(helmet());
@@ -17,6 +19,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
 app.use(cors());
 app.disable('x-powered-by')
+
+//Creating an endpoit
 
 app.use("/regBots", botRoutes)
 const PORT = process.env.PORT;

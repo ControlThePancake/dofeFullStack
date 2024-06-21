@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+//Middleware used to check whether the request made was from the front end
 export const verifyToken = async (req, res, next) =>{
     try{
         let token = req.header("Authorisation");

@@ -26,8 +26,8 @@ export const tokenNum = async (req, res) => {
     };
 
 /* Update */
-
-
+//First stage in bot process
+//Prepares bot uuid and subtracts token num from database
 export const botPrep = async (req, res) => {
     try {
         console.log("Received request body:", req.body);
@@ -53,6 +53,9 @@ export const botPrep = async (req, res) => {
     }
 };
 
+
+//second stage in bot process
+//makes an api call to the backend to launch and run the bot
 export const botLaunch = async (req, res) => {
     try{
         const {values, sessionId,  pageType  } = req.body;
@@ -77,7 +80,9 @@ export const botLaunch = async (req, res) => {
     }
 };
 
-
+// Third part of the bot process
+//Curently Broken
+//Is mean to set up a websocket to report the current status of the bot to the front end 
 export const botStatus = async (req, res) =>{
     try{
         const { sessionId, status, gameCode, botName } = req.body;

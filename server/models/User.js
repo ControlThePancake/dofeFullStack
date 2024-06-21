@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Setting up user table in database
 const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true, max: 50 },
     firstName: { type: String, required: true, min: 3, max: 20 },

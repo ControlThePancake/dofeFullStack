@@ -4,8 +4,9 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
+//End points for authentication
 router.post("/login", login, verifyToken);
-router.post("/register", register, verifyToken); // Add this line for registration
+router.post("/register", register, verifyToken);
 
 
 export default router;

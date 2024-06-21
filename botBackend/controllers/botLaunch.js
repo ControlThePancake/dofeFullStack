@@ -1,12 +1,15 @@
 import { spawn } from "child_process";
-import fetch from 'node-fetch'; // Ensure you have node-fetch installed
+import fetch from 'node-fetch'; 
 
+// Main function use to launch bots
 export const botLaunch = async (req, res) => {
+    // Gets data from the request and then passes it through to the script
     try {
         const { gameCode, botName, botNum, pageType, sessionId } = req.body;
         const dataToSend = [gameCode, botNum, botName, sessionId];
         const bot = spawn("python", [`bots/${pageType}Bot.py`, ...dataToSend]);
 
+        // Listening for any outpt data
         bot.stdout.on("data", (data) => {
             const output = data.toString();
             console.log(output);

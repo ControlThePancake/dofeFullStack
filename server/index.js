@@ -55,4 +55,7 @@ mongoose.connect(process.env.MONGO_URL, {
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 }).catch((error) => console.log(error.message, "index.js"));
 
+//Stripe endpoint
+
 app1.listen(S_PORT, () => console.log(`Stripe running on port: ${S_PORT}`));
+
