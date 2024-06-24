@@ -32,7 +32,7 @@ const TokenShop = () => {
                 bgcolor={theme.palette.background.alt}
             >
                 <stripe-pricing-table 
-                    pricing-table-id="prctbl_1P2Hb5Jr7oV87jisGEe6TinC"
+                    pricing-table-id="prctbl_1PUDWNJr7oV87jisH1EGf972"
                     publishable-key="pk_test_51Oq1gWJr7oV87jis2dX6hsX5wJpwYOZXFmrbm0CRMQbO5yhXvkIpNjI1i0l0ZjIdozUi1K11cBVsEUwKrCrKfihU00EEY1IoEw"
                     client-reference-id={`${user._id}`}
                 >

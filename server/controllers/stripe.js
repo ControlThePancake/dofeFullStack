@@ -1,7 +1,6 @@
 import Stripe from "stripe";
 import dotenv from "dotenv";
 import User from "../models/User.js"
-import jwt from "jsonwebtoken";
 dotenv.config();
 const stripe = Stripe(`${process.env.STRIPE_KEY}`)
 const endpointSecret = `${process.env.ENDPOINT_SECRET}`;
@@ -16,6 +15,7 @@ export const stripeThing = async (req, res) => {
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
       res.status(400).send(`Webhook Error: ${err.message}`);
+      console.log("Webhook Error:", err.message);
       return;
     }
 
@@ -29,19 +29,19 @@ export const stripeThing = async (req, res) => {
         
         // The switch statement should be inside the forEach loop
         switch (item.price.product.id) { // Also, fixed typo from 'prodcut' to 'product'
-          case 'prod_Ph9YhrDw5o06oD':
-            tokens += 250; // Use += to accumulate tokens
+          case 'prod_QKtFru2g4UOjvh':
+            tokens += 250; // Use += to accumulate tokens # yes
             break;
     
-          case 'prod_Ph9V9lZOWhTDoC':
+          case 'prod_QKtHkEvhEiMpKX': //cheese
             tokens += 120;
             break;
     
-          case 'prod_Ph9ROQoAjeAxUg':
+          case 'prod_QKtG81kti7RyS8': //no
             tokens += 60;
             break;
     
-          case 'prod_Ph9NZrO0xCRl1P':
+          case 'prod_Ps5EgwlgdwwFju':// test 1
             tokens += 25;
             break;
     
@@ -60,8 +60,6 @@ export const stripeThing = async (req, res) => {
         tokenNum += tokens;
         user.tokenNum = tokenNum;
         await user.save();
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET); // Ensure `user._id` is correctly referenced
-        res.status(200).json({ token, user });
       } catch (err) {
         console.log("An error occurred:", err.message);
         res.status(500).json({ message: err.message });
@@ -98,4 +96,5 @@ export const stripeThing = async (req, res) => {
 
     // Return a 200 response to acknowledge receipt of the event
     res.status(200).send();
+    console.log("IT WORKED, WE MAKING BAG")
 };

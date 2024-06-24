@@ -3,6 +3,8 @@ import { Typography, Box, useMediaQuery, useTheme } from '@mui/material';
 import Navbar from 'scenes/navBar';
 import StarField from 'scenes/homePage/pageStyle';
 
+
+
 const AboutMePage = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery("(min-width: 1000px)");

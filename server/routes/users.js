@@ -14,13 +14,14 @@ const router = express.Router();
 /* READ */
 /*
 router.get("/:id", verifyToken, getUser);
-router.get("/:id/tokens", verifyToken, tokenNum);
 */
+router.get("/tokens/:id", verifyToken, tokenNum);
+
 
 //User and bot endpoint
 /* UPDATE */
-router.patch("/bot-prep", botPrep, verifyToken )
-router.patch("/bot-launch", botLaunch,verifyToken)
-router.post("/bot-status", botStatus,verifyToken)
+router.patch("/bot-prep", verifyToken, botPrep );
+router.post("/bot-launch", verifyToken, botLaunch);
+router.get("/bot-status", verifyToken, botStatus);
 
 export default router;

@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 export const botLaunch = async (req, res) => {
     // Gets data from the request and then passes it through to the script
     try {
-        const { gameCode, botName, botNum, pageType, sessionId } = req.body;
+        const { gameCode, botName, botNum, pageType, sessionId, authToken} = req.body;
         const dataToSend = [gameCode, botNum, botName, sessionId];
         const bot = spawn("python", [`bots/${pageType}Bot.py`, ...dataToSend]);
 
@@ -18,9 +18,9 @@ export const botLaunch = async (req, res) => {
                 const status = statusText.split(":")[1].trim();
                 const sessionId = sessionIdText.split(":")[1].trim();
                  //Forward this status to the MainBackend
-                fetch(':3001/users/bot-status', {
-                   method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
+                fetch('http://192.168.0.133:3001/users/bot-status', {
+                    method: 'POST',
+                    headers: {"Authorization": `Bearer ${authToken}`, 'Content-Type': 'application/json'},
                     body: JSON.stringify({ sessionId, status, gameCode, botName })
                 });
             }

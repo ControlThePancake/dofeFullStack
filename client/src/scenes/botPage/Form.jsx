@@ -53,7 +53,8 @@ const BotForm = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'));
-
+  const token = useSelector((state) => state.token);
+  const authToken = token;
   const [sessionId, setSessionId] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [socket, setSocket] = useState(null);
@@ -72,9 +73,9 @@ const BotForm = () => {
 
   const botInit = async (values, onSubmitProps) => {
     const sendData = {values, _id, pageType};
-    const savedUserResponse = await fetch(':3001/users/bot-prep', {
+    const savedUserResponse = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/users/bot-prep`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Authorization": `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(sendData),
     });
 
@@ -82,15 +83,15 @@ const BotForm = () => {
     console.log(data);
     onSubmitProps.resetForm();
     setSessionId(data.sessionId);
-    botLaunch( values, data , _id, pageType );
+    botLaunch( values, data , _id, pageType, authToken );
   };
 
-  const botLaunch = async (values, data, _id , pageType) => {
+  const botLaunch = async (values, data, _id , pageType, authToken) => {
     const sessionId = data.sessionId;
-    const sendData = {values, sessionId, _id, pageType};
-    const launchResponse = await fetch(":3001/users/bot-launch", {
-      method: "PATCH",
-      headers: {"content-Type" : "application/json"},
+    const sendData = {values, sessionId, _id, pageType, authToken};
+    const launchResponse = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/users/bot-launch`, {
+      method: "POST",
+      headers: {"Authorization": `Bearer ${token}`, 'Content-Type': 'application/json'},
       body: JSON.stringify(sendData),
     });
 

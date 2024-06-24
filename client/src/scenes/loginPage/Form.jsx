@@ -64,7 +64,6 @@ const Form = () => {
     const isNonMobile = useMediaQuery("(min-width: 600px)");
     const isLogin = pageType === "login";
     const isRegister = pageType === "register";
-
     const [errorDialogOpen, setErrorDialogOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -78,9 +77,9 @@ const Form = () => {
     };
 
     const register = async (values, onSubmitProps) => {
-        const response = await fetch(":3001/auth/register", {
+        const response = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/auth/register`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
         });
         if (!response.ok) {
@@ -96,9 +95,9 @@ const Form = () => {
         
 
     const login = async (values, onSubmitProps) => {
-        const response = await fetch(":3001/auth/login", {
+        const response = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/auth/login`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(values),
         });
 

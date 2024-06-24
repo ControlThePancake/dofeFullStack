@@ -19,11 +19,11 @@ export const tokenNum = async (req, res) => {
         const { id } = req.params;
         const user = await User.findById(id);
         const tokenNum = user ? user.tokenNum : null;
-        res.status(200).json(tokenNum);
-    }catch (err) {
+        res.status(200).json({ tokens: tokenNum }); // Ensure the response format matches what the frontend expects
+    } catch (err) {
         res.status(404).json({ message: err.message });
-      }
-    };
+    }
+};
 
 /* Update */
 //First stage in bot process
@@ -44,10 +44,9 @@ export const botPrep = async (req, res) => {
         user.tokenNum = tokenNum;
         console.log("User tokenNum:", user.tokenNum);
         await user.save();
-        const token = jwt.sign({id: _id}, process.env.JWT_SECRET);
         const sessionId = uuidv4(); // Generates a unique UUID
         console.log(sessionId);
-        res.status(200).json({token,sessionId});
+        res.status(200).json({sessionId: sessionId});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -58,12 +57,12 @@ export const botPrep = async (req, res) => {
 //makes an api call to the backend to launch and run the bot
 export const botLaunch = async (req, res) => {
     try{
-        const {values, sessionId,  pageType  } = req.body;
+        const {values, sessionId,  pageType, authToken } = req.body;
         const gameCode = parseInt(values.gameCode);
         const botName = values.botName;
         const botNum = values.botNum;
-        const send = async (gameCode ,botName, botNum, pageType, sessionId) =>{
-            const dataToSend = {gameCode, botName, botNum, pageType, sessionId};
+        const send = async (gameCode ,botName, botNum, pageType, sessionId, authToken) =>{
+            const dataToSend = {gameCode, botName, botNum, pageType, sessionId, authToken};
             const response = await fetch("http://192.168.0.133:3002/regBots/botLaunch", {
                 method: "PATCH",
                 headers: { 'Content-Type': 'application/json' },
@@ -73,7 +72,7 @@ export const botLaunch = async (req, res) => {
             const data = await response.json();
             console.log(data);
         };
-        send(gameCode ,botName, botNum, pageType, sessionId);
+        send(gameCode ,botName, botNum, pageType, sessionId, authToken);
         res.status(200).json({message: `Session, ${sessionId}, initialised `});
     }catch (err){
         res.status(500).json({ message: err.message });
