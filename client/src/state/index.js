@@ -8,6 +8,7 @@ const initialState = {
 
 };
 
+//reducer stuff that i mostly understand?
 
 export const authSlice = createSlice({
     name: "auth",

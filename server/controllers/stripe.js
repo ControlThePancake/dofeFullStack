@@ -19,8 +19,6 @@ export const stripeThing = async (req, res) => {
       return;
     }
 
-   
-
     const fulfillOrder = async (lineItems, clientId, customerEmail) => {
       let tokens = 0;
       
@@ -28,20 +26,20 @@ export const stripeThing = async (req, res) => {
         console.log(`Fulfilling order item: Product ID: ${item.price.product.id}, Description: ${item.description}`);
         
         // The switch statement should be inside the forEach loop
-        switch (item.price.product.id) { // Also, fixed typo from 'prodcut' to 'product'
-          case 'prod_QKtFru2g4UOjvh':
-            tokens += 250; // Use += to accumulate tokens # yes
+        switch (item.price.product.id) { 
+          case 'prod_Ph9YhrDw5o06oD':
+            tokens += 250; // Use += to accumulate tokens 
             break;
     
-          case 'prod_QKtHkEvhEiMpKX': //cheese
+          case 'prod_Ph9V9lZOWhTDoC': 
             tokens += 120;
             break;
     
-          case 'prod_QKtG81kti7RyS8': //no
+          case 'prod_Ph9ROQoAjeAxUg': 
             tokens += 60;
             break;
     
-          case 'prod_Ps5EgwlgdwwFju':// test 1
+          case 'prod_Ph9NZrO0xCRl1P':
             tokens += 25;
             break;
     
@@ -78,7 +76,6 @@ export const stripeThing = async (req, res) => {
             expand: ['line_items', 'line_items.data.price.product'], // Expand to include product details 
           }
         );
-        
 
         const lineItems = sessionWithLineItems.line_items;
         const clientId = sessionWithLineItems.client_reference_id;
@@ -96,5 +93,44 @@ export const stripeThing = async (req, res) => {
 
     // Return a 200 response to acknowledge receipt of the event
     res.status(200).send();
-    console.log("IT WORKED, WE MAKING BAG")
+    console.log("Successfully send 200 response");
 };
+
+// Can only be tested in live mode so its honestly just praying that it works
+export const checkoutAuth = async (req, res) => {
+  let event;
+  console.log(req.body)
+  console.log("yes")
+  if (endpointSecret) {
+    // Get the signature sent by Stripe
+    const signature = req.headers['stripe-signature'];
+    try {
+      event = stripe.webhooks.constructEvent(
+        req.body,
+        signature,
+        endpointSecret
+      );
+    } catch (err) {
+      console.log(`⚠️  Webhook signature verification failed.`, err.message);
+      return res.sendStatus(400);
+    }
+  }
+  try{
+    if (event.type === 'issuing_authorization.request') {
+      const auth = event.data.object;
+      console.log(auth);
+      // temporary for testing
+      const approved = 1 < 2;
+      res.writeHead(200, {"Stripe-Version": "2023-10-16", "Content-Type": "application/json"});
+      const body = JSON.stringify({"approved": approved});
+      res.end(body);
+      return;
+    };
+  }catch (err){
+    console.log(err);
+  };
+  
+  console.log("no clue mate");
+  res.end();
+};
+

@@ -30,10 +30,12 @@ const TokenShop = () => {
                 m="2rem auto"
                 borderRadius="1.5rem"
                 bgcolor={theme.palette.background.alt}
+
+                //Stripe stuff that was almost the death of me
             >
                 <stripe-pricing-table 
-                    pricing-table-id="prctbl_1PUDWNJr7oV87jisH1EGf972"
-                    publishable-key="pk_test_51Oq1gWJr7oV87jis2dX6hsX5wJpwYOZXFmrbm0CRMQbO5yhXvkIpNjI1i0l0ZjIdozUi1K11cBVsEUwKrCrKfihU00EEY1IoEw"
+                    pricing-table-id="prctbl_1OrlRpJr7oV87jisK5RBrxyk"
+                    publishable-key="pk_live_51Oq1gWJr7oV87jisi1WSnv2TvNzKYG2G2cVrqqM1TFLYyiKcIL7RrSZY3bCcyrSI9wuQ2uIrpOXcIBhbLUp55Mez00rctwezyH"
                     client-reference-id={`${user._id}`}
                 >
                 </stripe-pricing-table>

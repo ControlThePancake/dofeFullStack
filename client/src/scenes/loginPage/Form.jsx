@@ -1,3 +1,4 @@
+//Imports
 import { useState } from "react";
 import{
     Box,
@@ -29,6 +30,8 @@ const loginSchema = yup.object().shape({
     email: yup.string().email("Invalid Email").required("required"),
     password: yup.string().required("required"),
 });
+
+//Initial values for the form
 
 const initialValuesRegister ={
     email: "",

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef} from 'react';
 import "../../styles.css";
 
+// I took this from some royalty free JS background code website, its meant to be responsive but i disabled this feature due to some bugs, and to reduce load on the client and server
 const StarField = () => {
   const canvasRef = useRef(null);
 

@@ -1,3 +1,4 @@
+//Imports
 import { useState } from "react";
 import {
   Box,
@@ -20,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
 
-
+// Main reusable nav bar component
 
 const Navbar = () => {
   

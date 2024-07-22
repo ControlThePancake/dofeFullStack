@@ -1,5 +1,4 @@
 import User from "../models/User.js";
-import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from 'uuid';
 
 /* Read */
@@ -19,7 +18,7 @@ export const tokenNum = async (req, res) => {
         const { id } = req.params;
         const user = await User.findById(id);
         const tokenNum = user ? user.tokenNum : null;
-        res.status(200).json({ tokens: tokenNum }); // Ensure the response format matches what the frontend expects
+        res.status(200).json({ tokens: tokenNum }); 
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
@@ -37,7 +36,7 @@ export const botPrep = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        console.log("User found HURRAAAAA:", user);
+        console.log("User found :", user);
         const botNumNew = parseInt(values.botNum)
         let tokenNum = user ? user.tokenNum : null;
         tokenNum -= botNumNew;

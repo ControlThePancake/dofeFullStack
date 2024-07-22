@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
+#File to tell webscrapers not scrape or something, (most usually ignore it anyway)
 User-agent: *
 Disallow:

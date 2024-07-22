@@ -25,8 +25,8 @@ export const register = async (req, res) => {
         
         const savedUser = await newUser.save();
 
-        // Create a token for the new user
-        const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
+        // Create a token for the new user with a life span of a week
+        const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         // Return the user data and token, excluding the password hash
         const userToSend = { ...savedUser._doc };

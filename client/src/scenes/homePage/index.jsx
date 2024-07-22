@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from 'scenes/navBar'; // Adjust import paths as necessary
+import NavBar from 'scenes/navBar';
 import { useNavigate } from 'react-router-dom';
 import { Typography, Card, CardContent, Grid, Button, useTheme, useMediaQuery, Box } from '@mui/material';
 import StarField from './pageStyle';

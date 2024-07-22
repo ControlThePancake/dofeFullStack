@@ -30,6 +30,7 @@ export const colorTokens = {
   };
   
   // mui theme settings
+  // Very ineffecient way to enforce dark mode (initally there were both but after careful consideration the light mode was removed)
   export const themeSettings = (mode) => {
     return {
       palette: {

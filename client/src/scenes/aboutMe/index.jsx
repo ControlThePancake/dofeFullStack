@@ -4,7 +4,7 @@ import Navbar from 'scenes/navBar';
 import StarField from 'scenes/homePage/pageStyle';
 
 
-
+// Main function
 const AboutMePage = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery("(min-width: 1000px)");
@@ -59,18 +59,18 @@ const AboutMePage = () => {
 
                         This is a website made to launch bots and do math homework for you (specifically DrFrost)<br></br><br></br>
 
-                        Despite this website being a bit messy rn, im pretty happy with how its coming along (I procrastinated for ages)<br></br><br></br>
-
-                        This is a project im making in my spare time to learn some web dev stuff and pray that I get millions in donations (<a href="https://buy.stripe.com/aEU7whaWn6mxdwsdQQ" style={{color: theme.palette.primary.main, textDecoration: "none"}}>pls donate</a>)<br></br><br></br>
+                        Despite this website being in development, im pretty happy with how its coming along <br></br><br></br>
                         
-                        To actually use the thing (probably the reason you came to this page), just click on one the bots on the home page, enter your bot name and the number of bots you have. Depending on the number of bots you will be charged a certain amount of tokens. Tokens can be bought or you can ask me to give you some more ig <br></br><br></br>
+                        To actually use the website, just click on one of the bot cards on the home page, enter your bot name and the number of bots you want. Depending on the number of bots, you will be charged a certain amount of tokens. Tokens can be bought or you can ask me. <br></br><br></br>
 
                         Keep in mind that these are simply made to flood kahoots and will not get the answers right, this feature will be added later<br></br><br></br>
 
-                        Anyway congrats for making it this far, have some free tokens ig (still in development)
+                        Anyway if you've got some spare change (<a href="https://buy.stripe.com/aEU7whaWn6mxdwsdQQ" style={{color: theme.palette.primary.main, textDecoration: "none"}}>pls donate</a>)<br></br><br></br>
                         
                     </Typography>
                 </Box>
+
+                // Havent actually made the footer a reusable component yet
                 <Box sx={{
                     py: '2rem',
                     textAlign: 'center',
