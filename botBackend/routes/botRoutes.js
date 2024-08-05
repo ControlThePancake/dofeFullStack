@@ -5,7 +5,7 @@ import{
     botLaunch,
 } from "../controllers/botLaunch.js"
 
-import { verifyToken } from "../middleware/tokenAuth.js";
+//import { verifyToken } from "../middleware/tokenAuth.js";
 
 const router = express.Router();
 

@@ -1,5 +1,9 @@
 import React, { useState, useEffect} from 'react';
-
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 import {
   Box,
   Button,
@@ -15,27 +19,39 @@ import { updateTokens } from 'state';
 import { useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 
-
+function BotConfirmation({ open, handleClose, confMessage }) {
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>{"Success"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>{confMessage}</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>OK</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 const botSchema = (userTokens) => yup.object().shape({
-    gameCode: yup
-      .number()
-      .integer('Number of bots must be an integer')
-      .typeError('Game code must be a number')
-      .required('Game code is required'),
-    botName: yup.string().required('Bot name is required').max(15, 'Bot name must be at most 15 characters'),
-    botNum: yup
-      .number()
-      .required('Number of bots is required')
-      .typeError('Number of bots must be a number')
-      .integer('Number of bots must be an integer')
-      .min(1, 'Number of bots must be at least 1')
-      .max(10, 'Number of bots must be 10 at most')
-      .test('hasEnoughTokens', 'Not enough tokens'  , value => {
-        const requiredTokens = value;
-        return userTokens >= requiredTokens;
-      }),
-  });
+  gameCode: yup
+    .number()
+    .integer('Number of bots must be an integer')
+    .typeError('Game code must be a number')
+    .required('Game code is required'),
+  botName: yup.string().required('Bot name is required').max(15, 'Bot name must be at most 15 characters'),
+  botNum: yup
+    .number()
+    .required('Number of bots is required')
+    .typeError('Number of bots must be a number')
+    .integer('Number of bots must be an integer')
+    .min(1, 'Number of bots must be at least 1')
+    .max(10, 'Number of bots must be 10 at most')
+    .test('hasEnoughTokens', 'Not enough tokens', value => {
+      const requiredTokens = value;
+      return userTokens >= requiredTokens;
+    }),
+});
 
 const initialValues = {
   gameCode: '',
@@ -44,11 +60,9 @@ const initialValues = {
 };
 
 const BotForm = () => {
-
-  // main variables
   const location = useLocation();
   const botTypeFromState = location.state?.botType.replace(' Bot', ''); // Remove ' Bot' from the botType if it exists
-  const [pageType, setPageType] = useState(botTypeFromState?.toLowerCase().replace(/\s+/g, '') || 'kahoot');;
+  const [pageType, setPageType] = useState(botTypeFromState?.toLowerCase().replace(/\s+/g, '') || 'kahoot');
   const theme = useTheme();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -58,120 +72,91 @@ const BotForm = () => {
   const [sessionId, setSessionId] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [socket, setSocket] = useState(null);
-  
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [confMessage, setMessage] = useState('');
 
-  // unused code that might be needed later
+  const handleOpenDialog = (message) => {
+    setMessage(message);
+    setDialogOpen(true);
+  };
 
-  // const isQuizizz = pageType === 'quizizz'; // Uncomment if used
-  // Switch to {pageType === 'kahoot' ? 'Quizizz' : 'Kahoot'} temp keeping it dead
-
-  // Bot Code and Required variables
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
   const _id = user._id;
 
-  // Bot Status Monitor
-
   const botInit = async (values, onSubmitProps) => {
-    const sendData = {values, _id, pageType};
-    const savedUserResponse = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/users/bot-prep`, {
+    const sendData = { values, _id, pageType };
+    const savedUserResponse = await fetch(`https://botpulse.xyz/users/bot-prep`, {
       method: 'PATCH',
       headers: { "Authorization": `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(sendData),
     });
 
+    if (!savedUserResponse.ok) {
+      console.error("Failed to initialise bot:", savedUserResponse.statusText);
+      return;
+    }
+
     const data = await savedUserResponse.json();
     console.log(data);
     onSubmitProps.resetForm();
     setSessionId(data.sessionId);
-    botLaunch( values, data , _id, pageType, authToken );
+    botLaunch(values, data, _id, pageType, authToken);
   };
 
-  const botLaunch = async (values, data, _id , pageType, authToken) => {
+  const botLaunch = async (values, data, _id, pageType, authToken) => {
     const sessionId = data.sessionId;
-    const sendData = {values, sessionId, _id, pageType, authToken};
-    const launchResponse = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/users/bot-launch`, {
+    values.gameCode = parseInt(data.gameCode);
+    const sendData = { values, sessionId, _id, pageType, authToken };
+    const launchResponse = await fetch(`https://botpulse.xyz/users/bot-launch`, {
       method: "POST",
-      headers: {"Authorization": `Bearer ${token}`, 'Content-Type': 'application/json'},
+      headers: { "Authorization": `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(sendData),
     });
 
-    const botData = await launchResponse.json();
-    console.log(botData)
-  };
+    if (launchResponse.ok) {
+      handleOpenDialog("Bot successfully initialised");
+    } else {
+      console.error("Failed to launch bot:", launchResponse.statusText);
+    }
 
+    const botData = await launchResponse.json();
+  };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     await botInit(values, onSubmitProps);
     dispatch(updateTokens(-values.botNum));
   }
 
-  // Currently this is still under development and will be fixed/used at a later date
-/*
-  useEffect(() => {
-    return () => {
-        if (socket) {
-            socket.disconnect();
-        }
-    };
-  }, [socket, sessionId]);
-
-    // Initialize the socket only if it has not been initialized yet
-    if (!socket) {
-        const newSocket = io(':3001/users/bot-status');
-
-        newSocket.emit('register', { sessionId });
-        
-        newSocket.on('statusUpdate', (data) => {
-            setStatusMessage(data.status);
-        });
-
-        newSocket.on('disconnect', () => {
-            console.log("Disconnected");
-        });
-
-        setSocket(newSocket); // Save the socket in state
-      }
-  };
-
-  // Cleanup when the component unmounts or sessionId changes
-  useEffect(() => {
-      return () => {
-          if (socket) {
-              socket.disconnect();
-          }
-      };
-  }, [socket, sessionId]);
-
-*/
-
   return (
     <>
       <Box p="1rem 6%" textAlign="center" width="100%">
-            <Typography fontWeight="bold" fontSize="clamp(1.5rem, 2.5rem, 2.75rem)" color="primary">
-                {pageType.charAt(0).toUpperCase() + pageType.slice(1)} Bot
-            </Typography>
-            {statusMessage && (
-                <Typography color="secondary" style={{ marginTop: '20px' }}>
-                    Status: {statusMessage}
-                </Typography>
-            )}
-        </Box>
-        <Box
-            width={isNonMobile ? "50%" : "93%"}
-            p="2rem"
-            m="2rem auto"
-            borderRadius="1.5rem"
-            bgcolor={theme.palette.background.alt}
-        >
-            <Typography fontWeight="500" variant="h4" sx={{ mb: "1.5rem" }}>
-                Try the {pageType.charAt(0).toUpperCase() + pageType.slice(1)} bot
-            </Typography>
+        <Typography fontWeight="bold" fontSize="clamp(1.5rem, 2.5rem, 2.75rem)" color="primary">
+          {pageType.charAt(0).toUpperCase() + pageType.slice(1)} Bot
+        </Typography>
+        {statusMessage && (
+          <Typography color="secondary" style={{ marginTop: '20px' }}>
+            Status: {statusMessage}
+          </Typography>
+        )}
+      </Box>
+      <Box
+        width={isNonMobile ? "50%" : "93%"}
+        p="2rem"
+        m="2rem auto"
+        borderRadius="1.5rem"
+        bgcolor={theme.palette.background.alt}
+      >
+        <Typography fontWeight="500" variant="h4" sx={{ mb: "1.5rem" }}>
+          Try the {pageType.charAt(0).toUpperCase() + pageType.slice(1)} bot
+        </Typography>
         <Formik
-            initialValues={initialValues}
-            validationSchema={botSchema(user.tokenNum)}
-            onSubmit={handleFormSubmit}
-// Disable immediate validation on blur
-            validateOnMount
+          initialValues={initialValues}
+          validationSchema={botSchema(user.tokenNum)}
+          onSubmit={handleFormSubmit}
+          validateOnMount
         >
           {({
             values,
@@ -217,27 +202,26 @@ const BotForm = () => {
                   autoComplete="botNum"
                 />
               </Box>
-              
+
               <Box>
-                
                 <Typography
-                  sx={{ mt: '2rem',
+                  sx={{
+                    mt: '2rem',
                     display: 'block',
                     maxWidth: "100%",
                     overflow: "hidden",
                     textOverflow: 'ellipsis',
-                    }}
-                  >
-                    This will cost {(!values.botNum || Number(values.botNum) === 0) ? 1 : values.botNum } token(s)<br>
-                    </br>
-                    <a href='/tokenShop' style={{color: theme.palette.primary.main, textDecoration: 'underline'}}>Get more tokens</a>
-                  </Typography>
+                  }}
+                >
+                  This will cost {(!values.botNum || Number(values.botNum) === 0) ? 1 : values.botNum} token(s)<br></br>
+                  <a href='/tokenShop' style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>Get more tokens</a>
+                </Typography>
                 <Button
                   fullWidth
                   type="submit"
                   variant="contained"
                   color="primary"
-                  sx={{m: '2rem 0', p:"1rem "}}
+                  sx={{ m: '2rem 0', p: "1rem " }}
                 >
                   LAUNCH BOT
                 </Button>
@@ -252,19 +236,15 @@ const BotForm = () => {
                     },
                   }}
                 >
-                
                 </Typography>
               </Box>
             </form>
           )}
         </Formik>
       </Box>
+      <BotConfirmation open={dialogOpen} handleClose={handleCloseDialog} confMessage={confMessage} />
     </>
   );
 };
 
 export default BotForm;
-
-
-
-

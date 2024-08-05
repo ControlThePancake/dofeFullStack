@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 export const botLaunch = async (req, res) => {
     // Gets data from the request and then passes it through to the script
     try {
-        const { gameCode, botName, botNum, pageType, sessionId, authToken} = req.body;
+        const { gameCode, botName, botNum, pageType, sessionId} = req.body;
         const dataToSend = [gameCode, botNum, botName, sessionId];
         const bot = spawn("python", [`bots/${pageType}Bot.py`, ...dataToSend]);
 
@@ -29,6 +29,10 @@ export const botLaunch = async (req, res) => {
         //});
 
         // Listening for any error data
+
+        bot.stdout.on("data", (data) => {
+            console.log("Data from Python script:", data.toString());
+        });
         
         bot.stderr.on("data", (data) => {
             console.error("Error from Python script:", data.toString());

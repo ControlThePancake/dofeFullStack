@@ -27,7 +27,7 @@ const BotPage = () => {
                     Email: <a href="mailto:admin@botpulse.xyz" style={{ color: theme.palette.primary.main }}>admin@botpulse.xyz</a>
                 </Typography>
                 <Typography variant="h5" fontWeight="500">
-                    © 2024 BotPulse. All rights reserved.
+                    © 2024 BotPulse. All rights reserved. V 1.1
                 </Typography>
             </Box>
         </Box>

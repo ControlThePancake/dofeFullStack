@@ -30,14 +30,12 @@ export const tokenNum = async (req, res) => {
 export const botPrep = async (req, res) => {
     try {
         console.log("Received request body:", req.body);
-        const { _id, values} = req.body;
-        console.log(_id, values.botNum);
+        const { _id, values} = req.body;;
         const user = await User.findById(_id);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
-        }
-        console.log("User found :", user);
-        const botNumNew = parseInt(values.botNum)
+        };
+        const botNumNew = parseInt(values.botNum);
         let tokenNum = user ? user.tokenNum : null;
         tokenNum -= botNumNew;
         user.tokenNum = tokenNum;
@@ -57,12 +55,13 @@ export const botPrep = async (req, res) => {
 export const botLaunch = async (req, res) => {
     try{
         const {values, sessionId,  pageType, authToken } = req.body;
-        const gameCode = parseInt(values.gameCode);
+        const gameCode = values.gameCode.replace(/\s+/g, '');
+        console.log(gameCode);
         const botName = values.botName;
         const botNum = values.botNum;
         const send = async (gameCode ,botName, botNum, pageType, sessionId, authToken) =>{
             const dataToSend = {gameCode, botName, botNum, pageType, sessionId, authToken};
-            const response = await fetch("http://192.168.0.133:3002/regBots/botLaunch", {
+            const response = await fetch("http://192.168.0.10:3002/regBots/botLaunch", {
                 method: "PATCH",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataToSend),

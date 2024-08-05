@@ -17,7 +17,7 @@ const TokenShop = () => {
             <Box p="1rem 6%" textAlign="center" width="100%">
                 <Typography
                     fontWeight="bold"
-                    fontSize="clamp(1.5rem, 3vw, 3.375rem)"
+                    fontSize="clamp(1.5rem, 3rem, 3.375rem)"
                     textAlign="center"
                     color="primary"
                 >
@@ -51,7 +51,7 @@ const TokenShop = () => {
                     Email: <a href="mailto:admin@botpulse.xyz" style={{ color: theme.palette.primary.main }}>admin@botpulse.xyz</a>
                 </Typography>
                 <Typography variant="h5" fontWeight="500">
-                    © 2024 BotPulse. All rights reserved.
+                    © 2024 BotPulse. All rights reserved. V 1.1
                 </Typography>
             </Box>
         </Box>

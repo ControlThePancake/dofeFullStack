@@ -24,16 +24,7 @@ import FlexBetween from "components/FlexBetween";
 // Main reusable nav bar component
 
 const Navbar = () => {
-  
-  const buttonStyle = {
-    background: 'none', // This makes the background transparent
-    border: 'none',    // This removes the border
-    color: 'inherit',  // This makes the text color inherit from the parent
-    padding: '0',      // This removes padding, adjust as needed
-    cursor: 'pointer', // This changes the mouse cursor to a pointer on hover
-    outline: 'none',
-    fontSize:"clamp(0.5rem, 1rem, 1.25rem)", // This removes the outline on focus (for accessibility, you might want to keep it or handle focus differently)
-  };
+
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,8 +44,6 @@ const Navbar = () => {
   } else {
       fullName = `${user.firstName} ${user.lastName}`;
   }
-
-  console.log(tokens);
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -80,17 +69,17 @@ const Navbar = () => {
       {isNonMobileScreens ? (
         <FlexBetween gap="2.5rem">
           <Typography>
-              <button style={buttonStyle} onClick={() => navigate("/aboutMe")} >
+              <button className="button" onClick={() => navigate("/aboutMe")} >
               About Me
               </button>
             </Typography>
            {/* <Typography>
-              <button style={buttonStyle} onClick={() => navigate("/contactMe")} >
+              <button onClick={() => navigate("/contactMe")} >
               Contact Me
               </button>
       </Typography> */}
             <Typography>
-              <button style={buttonStyle} onClick={() => navigate("/tokenShop")} >
+              <button className="button" onClick={() => navigate("/tokenShop")} >
               Tokens: {tokens}
               </button>
             </Typography>
@@ -159,17 +148,17 @@ const Navbar = () => {
           >
         
             <Typography>
-              <button style={buttonStyle} onClick={() => navigate("/aboutMe")} >
+              <button className="button" onClick={() => navigate("/aboutMe")} >
               About Me
               </button>
             </Typography>
             {/*<Typography>
-              <button style={buttonStyle} onClick={() => navigate("/contactMe")} >
+              <button onClick={() => navigate("/contactMe")} >
               Contact Me
               </button>
       </Typography>*/}
             <Typography>
-              <button style={buttonStyle} onClick={() => navigate("/tokenShop")} >
+              <button className="button" onClick={() => navigate("/tokenShop")} >
               Tokens: {tokens}
               </button>
             </Typography>

@@ -23,14 +23,14 @@ const registerScheme = yup.object().shape({
     email: yup.string().email("Invalid Email").required("required"),
     firstName: yup.string().required("required"),
     lastName: yup.string(),
-    password: yup.string().required("required"),
+    password: yup.string().required("required").matches(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,20}$/, "Password must contain at least 8 characters and at most 20\n Should contain one uppercase letter and one number"),
 });
 
 const loginSchema = yup.object().shape({
     email: yup.string().email("Invalid Email").required("required"),
     password: yup.string().required("required"),
 });
-
+ 
 //Initial values for the form
 
 const initialValuesRegister ={
@@ -80,7 +80,7 @@ const Form = () => {
     };
 
     const register = async (values, onSubmitProps) => {
-        const response = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/auth/register`, {
+        const response = await fetch(`https://botpulse.xyz/auth/register`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -98,7 +98,7 @@ const Form = () => {
         
 
     const login = async (values, onSubmitProps) => {
-        const response = await fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/auth/login`, {
+        const response = await fetch(`https://botpulse.xyz/auth/login`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(values),
