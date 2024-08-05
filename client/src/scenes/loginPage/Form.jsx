@@ -23,7 +23,11 @@ const registerScheme = yup.object().shape({
     email: yup.string().email("Invalid Email").required("required"),
     firstName: yup.string().required("required"),
     lastName: yup.string(),
-    password: yup.string().required("required").matches(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,20}$/, "Password must contain at least 8 characters and at most 20\n Should contain one uppercase letter and one number"),
+    password: yup.string().required("required")
+    .min(8, "Password must be at least 8 characters")
+    .max(20, "Password must be at most 20 characters")
+    .matches(/^\S*$/, "Password cannot contain spaces")
+    .matches(/^(?=.*[A-Z])(?=.*\d).+$/, "Password must contain at least one uppercase letter and one number"),
 });
 
 const loginSchema = yup.object().shape({
