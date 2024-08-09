@@ -57,6 +57,7 @@ So... thats it huh. This marks the end and completion of the DofE side of this p
 - Account system
 - The ability to launch kahoot flood bots
 - The ability to buy and spend tokens, with the the authentication framework basically done? might sneak that in during the following days
+  
 That mostly concludes the user requirements
 But in all honesty I learned alot more about the backend and architectural side of full stack webdev
 - I learned how to host on cloud providers and locally (did some testing on both, settled on hosting locally)
