@@ -30,7 +30,7 @@ export const tokenNum = async (req, res) => {
 export const botPrep = async (req, res) => {
     try {
         console.log("Received request body:", req.body);
-        const { _id, values} = req.body;;
+        const { _id, values} = req.body;
         const user = await User.findById(_id);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -55,6 +55,7 @@ export const botPrep = async (req, res) => {
 export const botLaunch = async (req, res) => {
     try{
         const {values, sessionId,  pageType, authToken } = req.body;
+        console.log("Received request body:", req.body);
         const gameCode = values.gameCode.replace(/\s+/g, '');
         console.log(gameCode);
         const botName = values.botName;
@@ -80,18 +81,18 @@ export const botLaunch = async (req, res) => {
 // Third part of the bot process
 //Curently Broken
 //Is mean to set up a websocket to report the current status of the bot to the front end 
-export const botStatus = async (req, res) =>{
-    try{
-        const { sessionId, status, gameCode, botName } = req.body;
-        console.log(`Status update for session ${sessionId}: ${status}`);
-        // Currently letting this be broken
-        io.to(sessionId).emit('statusUpdate', { status, gameCode, botName });
-        res.status(200).send("Status update received");
-    }catch (err) {
-        // Will happen every time currently
-        res.status(500).json({message : `It died ${err.message}`})
-        console.log(`It died ${err.message}`)
-    }
-};
+//export const botStatus = async (req, res) =>{
+//    try{
+//        const { sessionId, status, gameCode, botName } = req.body;
+//        console.log(`Status update for session ${sessionId}: ${status}`);
+//        // Currently letting this be broken
+//        io.to(sessionId).emit('statusUpdate', { status, gameCode, botName });
+ //       res.status(200).send("Status update received");
+//    }catch (err) {
+// Will happen every time currently
+//        res.status(500).json({message : `It died ${err.message}`})
+//        console.log(`It died ${err.message}`)
+//   }
+//};
 
 

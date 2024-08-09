@@ -21,6 +21,6 @@ router.get("/tokens/:id", verifyToken, tokenNum);
 /* UPDATE */
 router.patch("/bot-prep", verifyToken, botPrep );
 router.post("/bot-launch", verifyToken, botLaunch);
-router.get("/bot-status", verifyToken, botStatus);
+//router.get("/bot-status", verifyToken, botStatus);
 
 export default router;

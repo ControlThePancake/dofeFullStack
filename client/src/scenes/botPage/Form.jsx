@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { updateTokens } from 'state';
 import { useLocation } from 'react-router-dom';
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 
 function BotConfirmation({ open, handleClose, confMessage }) {
   return (
@@ -69,9 +69,9 @@ const BotForm = () => {
   const isNonMobile = useMediaQuery(theme.breakpoints.up('sm'));
   const token = useSelector((state) => state.token);
   const authToken = token;
-  const [sessionId, setSessionId] = useState('');
+  //const [sessionId, setSessionId] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
-  const [socket, setSocket] = useState(null);
+  //const [socket, setSocket] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [confMessage, setMessage] = useState('');
 
@@ -100,15 +100,15 @@ const BotForm = () => {
     }
 
     const data = await savedUserResponse.json();
-    console.log(data);
+  
     onSubmitProps.resetForm();
-    setSessionId(data.sessionId);
+    //  setSessionId(data.sessionId);
     botLaunch(values, data, _id, pageType, authToken);
   };
 
   const botLaunch = async (values, data, _id, pageType, authToken) => {
     const sessionId = data.sessionId;
-    values.gameCode = parseInt(data.gameCode);
+
     const sendData = { values, sessionId, _id, pageType, authToken };
     const launchResponse = await fetch(`https://botpulse.xyz/users/bot-launch`, {
       method: "POST",
@@ -122,7 +122,6 @@ const BotForm = () => {
       console.error("Failed to launch bot:", launchResponse.statusText);
     }
 
-    const botData = await launchResponse.json();
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -136,11 +135,11 @@ const BotForm = () => {
         <Typography fontWeight="bold" fontSize="clamp(1.5rem, 2.5rem, 2.75rem)" color="primary">
           {pageType.charAt(0).toUpperCase() + pageType.slice(1)} Bot
         </Typography>
-        {statusMessage && (
+        {/*{statusMessage && (
           <Typography color="secondary" style={{ marginTop: '20px' }}>
             Status: {statusMessage}
           </Typography>
-        )}
+        )}*/}
       </Box>
       <Box
         width={isNonMobile ? "50%" : "93%"}

@@ -19,7 +19,7 @@ const ConfirmationPage = () => {
     
     useEffect(() => {
         if (userId) {
-            fetch(`http://${process.env.REACT_APP_PUBLIC_IP}:3001/users/tokens/${userId}`, {
+            fetch(`https://botpulse.xyz/users/tokens/${userId}`, {
                 method: 'GET',
                 headers: { "Authorization": `Bearer ${token}`, 'Content-Type': 'application/json' },
             })
