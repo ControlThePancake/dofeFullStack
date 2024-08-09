@@ -51,7 +51,23 @@ Theoretically not much is left but i have been saying that for some time so hone
 
 So its sort of been untouched, there are some minor changes but the bulk of the extra features will be added later as I simply dont have the time. The goal is to finish it by the end of this weekend and hopefully host it on either Cloudflare or DigitalOcean. I'll do a proper reflection after i get the project hosted but I feel I've learned alot. After using this on DofE this repo will probably be revamped, with me creating a duplicate repo which will be solely for future development.
 
+### Final Update
+---
+So... thats it huh. This marks the end and completion of the DofE side of this project. Ofcourse as promised I will continue working on the website, adding new bots, features, etc etc, but it will mostly probably be in a private github repo. This project took *alot* longer than I thought for various reasons, laziness, procrastination, exams, other commitments, no motivation and so on, but here we are. In the end I achieved most of what I set out to do, with the current website features being
+- Account system
+- The ability to launch kahoot flood bots
+- The ability to buy and spend tokens, with the the authentication framework basically done? might sneak that in during the following days
+That mostly concludes the user requirements
+But in all honesty I learned alot more about the backend and architectural side of full stack webdev
+- I learned how to host on cloud providers and locally (did some testing on both, settled on hosting locally)
+- Setting up load balancers and reverse proxies like NGinX
+- How to use REST APIs
+- Authenticating requests
+- How to use modern software such as cloud flare and stripe
+- How to use docker and isolationg processes for security reasons and what not
+It was a fun project and im glad i did this for DofE
 
+tldr: we're finally done
 
 If you have any inquires or suggestions, either email me or just make a fork and submit a pull request
 
