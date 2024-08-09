@@ -59,6 +59,7 @@ So... thats it huh. This marks the end and completion of the DofE side of this p
 - The ability to buy and spend tokens, with the the authentication framework basically done? might sneak that in during the following days
   
 That mostly concludes the user requirements
+
 But in all honesty I learned alot more about the backend and architectural side of full stack webdev
 - I learned how to host on cloud providers and locally (did some testing on both, settled on hosting locally)
 - Setting up load balancers and reverse proxies like NGinX
@@ -66,6 +67,7 @@ But in all honesty I learned alot more about the backend and architectural side 
 - Authenticating requests
 - How to use modern software such as cloud flare and stripe
 - How to use docker and isolationg processes for security reasons and what not
+  
 It was a fun project and im glad i did this for DofE
 
 tldr: we're finally done
