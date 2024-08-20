@@ -3,7 +3,6 @@ import express from "express";
 import{
     tokenNum,
     botLaunch,
-    botStatus,
     botPrep,
     } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
