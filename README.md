@@ -1,5 +1,5 @@
 # dofeFullStack
-## Domain: https@//botpulse.xyz
+## Domain: https://botpulse.xyz
 
 ## Email: admin@botpulse.xyz
 
